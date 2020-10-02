@@ -13,7 +13,7 @@
       <md-card id="card" align="left" v-for="data in news" :key="data.id">
         <table style="width:100% ">
           <!-- Date -->
-          <td style="width:25%" id="date">
+          <td style="width:20%" id="date">
             <center>
               <tr style="color:#8F8F8F">
                 {{
@@ -39,9 +39,9 @@
           <td style="width:80%; padding-left:10px">
             <tr>
               <!-- Description Event -->
-              <td style="width:75%; padding-left:10px">
+              <td style="width:75%; vertical-align: bottom; ">
                 <div>
-                  <b>{{ data.name }}</b>
+                  <b style="line-height:1px">{{ data.name }}</b>
                 </div>
                 <!-- <tr>
                   {{
@@ -51,12 +51,12 @@
               </td>
 
               <!-- Important Icon -->
-              <td align="right" style="width:5%; margin-right:10px; padding-left:10px;">
+              <td align="right" style="width:5%;">
                 <md-chip
                   class="md-accent"
                   md-clickable
                   v-if="data.status == 'Important'"
-                  style="margin:10px 10px 10px 10px ; background-color:#FFE24D; color:black; font-size: 11px; width:90px; text-align:center; font-weight:550;"
+                  style="margin:10px 5px 5px 5px ; background-color:#FFE24D; color:black; font-size: 11px; width:90px; text-align:center; font-weight:550;"
                 >
                   <span
                     id="iconStatus"
@@ -73,14 +73,18 @@
 
             <!-- Description Event -->
             <div>
-              <td style="width:80%; padding-left:10px">
+              <td style="width:80%;">
                 {{ data.description }}
               </td>
             </div>
 
             <!-- Member -->
             <tr style="float:right; padding-left:10px;">
-              <vs-avatar-group float max="4" style="margin-bottom:24px; margin-right: 10px;">
+              <vs-avatar-group
+                float
+                max="4"
+                style="margin-top:5px; margin-bottom:14px; margin-right: 5px;"
+              >
                 <vs-avatar
                   v-for="member in members"
                   :key="member.id"
