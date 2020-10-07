@@ -16,9 +16,11 @@ ENV NODE_ENV=production
 RUN npm install --only=production
 
 # Copy local code to the container image.
-
-COPY ./vue-app/dist ./dist
+#
+#COPY ./vue-app/dist ./dist
 # COPY ./react-app/build ./dist
+
+#COPY ./dist ./dist
 
 COPY ./server.js .
 
