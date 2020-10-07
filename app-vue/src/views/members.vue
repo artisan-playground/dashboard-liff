@@ -31,7 +31,7 @@
             <!-- end search button -->
             <!-- list member Admin -->
             <div class="listmembers">
-              <div v-for="member in memberFilter" :key="member.id">
+              <div v-for="member in userFilter" :key="member.id">
                 <div v-if="member.department === 'HR/Admin'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
                     <v-row>
