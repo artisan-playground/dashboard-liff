@@ -2,25 +2,20 @@
   <div class="project">
     <!-- <h1>This is an about page</h1> -->
     <Toolbar />
-
+    <br />
     <md-content id="content">
-      <br />
-      <br />
-      <br />
-      <br />
       <div>
         <!-- filter department -->
         <a-tabs default-active-key="1">
           <a-tab-pane key="1" tab="HR/Admin">
             <!-- search button -->
-            <table style="width:100%; margin-bottom:10px">
-              <td align="right" style="padding-right:18px">
+            <div style="width:100%; margin-bottom:10px">
+              <div align="right" style="padding-right:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
                   style="width: 50%"
-                  @search="onSearch"
                 />
 
                 <!-- <a-input-search
@@ -31,72 +26,72 @@
                   enter-button
                   @search="onSearch"
                 /> -->
-              </td>
-            </table>
+              </div>
+            </div>
             <!-- end search button -->
             <!-- list member Admin -->
-            <table style="width:100%;">
+            <div class="listmembers">
               <div v-for="member in memberFilter" :key="member.id">
-                <div class="listmembers" v-if="member.department === 'HR/Admin'">
+                <div v-if="member.department === 'HR/Admin'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
-                    <td id="card-media">
-                      <md-card-media>
+                    <v-row>
+                      <div id="card-media">
                         <div id="circle">
-                          <img id="imgProfile" v-bind:src="member.image" />
+                          <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
                         </div>
-                      </md-card-media>
-                    </td>
-                    <td id="information" align="left">
-                      <div>
-                        <b id="displayname">{{ member.displayName }}</b>
                       </div>
-                      <div id="memberposition">
-                        {{ member.position }}
+                      <div id="information">
+                        <div>
+                          <b id="displayname">{{ member.name }}</b>
+                        </div>
+                        <div id="memberposition">
+                          {{ member.position }}
+                        </div>
+                        <br />
+                        <div id="department">
+                          Full-time/Intern :
+                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                        </div>
+                        <div id="department">
+                          Department:
+                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                        </div>
                       </div>
-                      <br />
-                      <div id="department">
-                        Full-time/Intern :
-                        <span style="opacity: 0.75;">{{ member.type }}</span>
-                      </div>
-                      <div id="department">
-                        Department:
-                        <span style="opacity: 0.75;">{{ member.department }}</span>
-                      </div>
-                    </td>
+                    </v-row>
                   </v-card>
                 </div>
               </div>
-            </table>
+            </div>
             <!-- end list member Admin -->
           </a-tab-pane>
 
           <a-tab-pane key="2" tab="Development">
             <!-- search button -->
-            <table style="width:100%; margin-bottom:10px">
-              <td align="right" style="padding-right:18px">
+            <div style="width:100%; margin-bottom:10px">
+              <div align="right" style="padding-right:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
                   style="width: 50%"
-                  @search="onSearch"
                 />
-              </td>
-            </table>
+              </div>
+            </div>
             <!-- end search button -->
+            <!-- list Developer -->
             <div v-for="member in memberFilter" :key="member.id">
               <div class="listmembers" v-if="member.department === 'Development'">
                 <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
-                  <td id="card-media">
+                  <div id="card-media">
                     <md-card-media>
                       <div id="circle">
                         <img id="imgProfile" v-bind:src="member.image" />
                       </div>
                     </md-card-media>
-                  </td>
-                  <td id="information" align="left">
+                  </div>
+                  <div id="information" align="left">
                     <div>
-                      <b id="displayname">{{ member.displayName }}</b>
+                      <b id="displayname">{{ member.name }}</b>
                     </div>
                     <div id="memberposition">
                       {{ member.position }}
@@ -110,7 +105,7 @@
                       Department:
                       <span style="opacity: 0.75;">{{ member.department }}</span>
                     </div>
-                  </td>
+                  </div>
                 </v-card>
               </div>
             </div>
@@ -118,31 +113,30 @@
 
           <a-tab-pane key="3" tab="Design" force-render>
             <!-- search button -->
-            <table style="width:100%; margin-bottom:10px">
-              <td align="right" style="padding-right:18px">
+            <div style="width:100%; margin-bottom:10px">
+              <div align="right" style="padding-right:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
                   style="width: 50%"
-                  @search="onSearch"
                 />
-              </td>
-            </table>
+              </div>
+            </div>
             <!-- end search button -->
             <div v-for="member in memberFilter" :key="member.id">
               <div class="listmembers" v-if="member.department === 'Design'">
                 <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
-                  <td id="card-media">
+                  <div id="card-media">
                     <md-card-media>
                       <div id="circle">
                         <img id="imgProfile" v-bind:src="member.image" />
                       </div>
                     </md-card-media>
-                  </td>
-                  <td id="information" align="left">
+                  </div>
+                  <div id="information" align="left">
                     <div>
-                      <b id="displayname">{{ member.displayName }}</b>
+                      <b id="displayname">{{ member.name }}</b>
                     </div>
                     <div id="memberposition">
                       {{ member.position }}
@@ -156,7 +150,7 @@
                       Department:
                       <span style="opacity: 0.75;">{{ member.department }}</span>
                     </div>
-                  </td>
+                  </div>
                 </v-card>
                 <!-- <br />
                 <br />-->
@@ -166,31 +160,30 @@
 
           <a-tab-pane key="4" tab="Digital Marketing">
             <!-- search button -->
-            <table style="width:100%; margin-bottom:10px">
-              <td align="right" style="padding-right:18px">
+            <div style="width:100%; margin-bottom:10px">
+              <div align="right" style="padding-right:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
                   style="width: 50%"
-                  @search="onSearch"
                 />
-              </td>
-            </table>
+              </div>
+            </div>
             <!-- end search button -->
             <div v-for="member in memberFilter" :key="member.id">
               <div class="listmembers" v-if="member.department === 'Marketing'">
                 <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
-                  <td id="card-media">
+                  <div id="card-media">
                     <md-card-media>
                       <div id="circle">
                         <img id="imgProfile" v-bind:src="member.image" />
                       </div>
                     </md-card-media>
-                  </td>
-                  <td id="information" align="left">
+                  </div>
+                  <div id="information" align="left">
                     <div>
-                      <b id="displayname">{{ member.displayName }}</b>
+                      <b id="displayname">{{ member.name }}</b>
                     </div>
                     <div id="memberposition">{{ member.position }}</div>
                     <br />
@@ -202,7 +195,7 @@
                       Department:
                       <span style="opacity: 0.75;">{{ member.department }}</span>
                     </div>
-                  </td>
+                  </div>
                 </v-card>
                 <!-- <br />
                 <br />-->
@@ -227,24 +220,49 @@
 import Toolbar from '@/components/Toolbar.vue'
 import BarRouter from '@/components/BarRouter.vue'
 import store from '../store/index.js'
+import gql from 'graphql-tag'
 export default {
   name: 'member1',
   components: {
     Toolbar,
     BarRouter,
   },
+  apollo: {
+    users: gql`
+      query {
+        users {
+          id
+          name
+          image
+          email
+          department
+          position
+          type
+          skills
+        }
+      }
+    `,
+  },
   data() {
     return {
       members: store.state.members,
       search: '',
       displayName: '',
+      name: '',
+      users: [],
     }
   },
   computed: {
     memberFilter() {
       let text = this.search.trim()
       return this.members.filter(item => {
-        return item.displayName.indexOf(text) > -1
+        return item.displayName.toLowerCase().indexOf(text.toLowerCase()) > -1
+      })
+    },
+    userFilter() {
+      let text = this.search.trim()
+      return this.users.filter(item => {
+        return item.name.toLowerCase().indexOf(text.toLowerCase()) > -1
       })
     },
   },
@@ -258,6 +276,7 @@ div {
 
 #content {
   margin-bottom: 80px;
+  margin-top: 50px;
   /* ระยะห่างระหว่าง content กับแถบ menu ข้างล่าง */
 }
 
@@ -288,32 +307,27 @@ button {
   padding-right: 0px;
   padding-top: 15px;
   padding-bottom: 5px; /* ระยะห่างระหว่าง card */
+  height: 100%;
 }
 #card {
   /* padding: 15px 15px 15px 15px; */
-  border-radius: 5px;
+  /* border-radius: 5px; */
   /* เงากรอบขาว ระยะเงาด้านขวากับกรอบ ระยะเงาด้านล่างกับกรอบ ความฟุ่งของเงา สีของเงา*/
   box-shadow: 1.5px 1.5px 5px #b1b1b1;
   margin-bottom: 0px; /* ระยะห่างระหว่าง card */
   margin-top: 3px;
   margin-left: 15px;
   margin-right: 15px;
+  text-decoration: none;
 }
 #card-media {
   background-color: #9daace;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  padding-top: 8%;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 40px;
+  padding: 15px;
+  float: left;
 }
 #information {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 40px;
-  padding-top: 8%;
   vertical-align: middle;
+  float: left;
 }
 #imgProfile {
   /* margin-top: 17px; */

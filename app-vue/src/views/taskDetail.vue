@@ -209,14 +209,24 @@
                     <span style="float:left; color:#8F8F8F;">{{ comment.dateTime }}</span>
                   </v-row>
                 </v-col>
-                <v-col style="width:20%"
-                  ><span
-                    class="iconify"
-                    data-inline="false"
-                    data-icon="bi:three-dots-vertical"
-                    style="color: #8f8f8f; font-size: 10px; float:right"
-                  ></span
-                ></v-col>
+                <v-col style="width:20%">
+                  <a-dropdown :trigger="['click']" style="font-size: 10px; float:right">
+                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                      <b><a-icon type="more" style="color: #8F8F8F; font-size: 15px;"/></b>
+                    </a>
+                    <a-menu slot="overlay">
+                      <a-menu-item key="0" @click="reply">
+                        Reply
+                      </a-menu-item>
+                      <a-menu-item key="1" @click="edit">
+                        Edit
+                      </a-menu-item>
+                      <a-menu-item key="3" @click="deleteComment">
+                        Delete
+                      </a-menu-item>
+                    </a-menu>
+                  </a-dropdown>
+                </v-col>
               </v-row>
               <v-row>
                 <v-col style="padding-top: 0px;">
@@ -361,8 +371,12 @@ export default {
 
     // add comment
     addComment() {
-      console.log('test add comment')
+      if (this.newComment.trim().length == 0) {
+        console.log('please enter some comment')
+        return
+      }
 
+      console.log('test add comment')
       this.comments.push({
         id: this.idForComment,
         name: 'Pupaeng',
@@ -374,6 +388,18 @@ export default {
       this.newComment = ''
       this.idForComment++
       console.log(this.comments)
+    },
+
+    // delete comment
+    deleteComment() {
+      console.log('delete comment')
+    },
+
+    edit() {
+      console.log('edit comment')
+    },
+    reply() {
+      console.log('reply comment')
     },
   },
 }

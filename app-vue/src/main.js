@@ -7,6 +7,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css'
+import { createProvider } from './vue-apollo'
 
 Vue.component(Button.name, Button)
 Vue.prototype.$liff = window.liff
@@ -19,5 +20,6 @@ new Vue({
   router,
   store,
   vuetify,
+  apolloProvider: createProvider(),
   render: h => h(App),
 }).$mount('#app')

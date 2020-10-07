@@ -12,7 +12,6 @@
             type="search"
             placeholder="input search text"
             style="width: 50%"
-            @search="onSearch"
           />
           &nbsp;
           <a-select v-model="currentFilter" style="width: 28%; margin-right:18px;">
