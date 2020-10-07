@@ -35,14 +35,14 @@
                 <div v-if="member.department === 'HR/Admin'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
                     <v-row>
-                      <div id="card-media">
-                        <div id="circle">
-                          <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
-                        </div>
+                      <div id="card-media" style="vertical-align: middle;">
+                        <!-- <div id="circle" align="center"> -->
+                        <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
+                        <!-- </div> -->
                       </div>
-                      <div id="information">
+                      <div id="information" align="left">
                         <div>
-                          <b id="displayname">{{ member.name }}</b>
+                          <b id="displayname">{{ member.displayName }}</b>
                         </div>
                         <div id="memberposition">
                           {{ member.position }}
@@ -306,13 +306,19 @@ button {
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 15px;
-  padding-bottom: 5px; /* ระยะห่างระหว่าง card */
+  padding-bottom: 15px; /* ระยะห่างระหว่าง card */
   height: 100%;
+}
+.row {
+  margin-bottom: 24px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 #card {
   /* padding: 15px 15px 15px 15px; */
   /* border-radius: 5px; */
   /* เงากรอบขาว ระยะเงาด้านขวากับกรอบ ระยะเงาด้านล่างกับกรอบ ความฟุ่งของเงา สีของเงา*/
+  border-radius: 5px;
   box-shadow: 1.5px 1.5px 5px #b1b1b1;
   margin-bottom: 0px; /* ระยะห่างระหว่าง card */
   margin-top: 3px;
@@ -321,6 +327,8 @@ button {
   text-decoration: none;
 }
 #card-media {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   background-color: #9daace;
   padding: 15px;
   float: left;
@@ -328,15 +336,20 @@ button {
 #information {
   vertical-align: middle;
   float: left;
+  margin-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 #imgProfile {
   /* margin-top: 17px; */
-  margin-top: 2px;
+  /* margin-top: 2px; */
   border-radius: 100%;
   height: 80px;
   width: 80px;
   object-fit: cover;
   border: 4px solid #9daace;
+}
+#imgProfile:after {
 }
 #circle {
   width: 84px;
