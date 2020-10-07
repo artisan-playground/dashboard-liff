@@ -31,14 +31,14 @@
             <!-- end search button -->
             <!-- list member Admin -->
             <div class="listmembers">
-              <div v-for="member in userFilter" :key="member.id">
+              <div v-for="member in memberFilter" :key="member.id">
                 <div v-if="member.department === 'HR/Admin'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
                     <v-row>
                       <div id="card-media" style="vertical-align: middle;">
-                        <!-- <div id="circle" align="center"> -->
-                        <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
-                        <!-- </div> -->
+                        <div id="circle" align="center">
+                          <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
+                        </div>
                       </div>
                       <div id="information" align="left">
                         <div>
@@ -79,34 +79,36 @@
             </div>
             <!-- end search button -->
             <!-- list Developer -->
-            <div v-for="member in memberFilter" :key="member.id">
-              <div class="listmembers" v-if="member.department === 'Development'">
-                <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
-                  <div id="card-media">
-                    <md-card-media>
-                      <div id="circle">
-                        <img id="imgProfile" v-bind:src="member.image" />
+            <div class="listmembers">
+              <div v-for="member in memberFilter" :key="member.id">
+                <div v-if="member.department === 'Development'" style="width:100%; height:50%">
+                  <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
+                    <v-row>
+                      <div id="card-media" style="vertical-align: middle;">
+                        <div id="circle" align="center">
+                          <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
+                        </div>
                       </div>
-                    </md-card-media>
-                  </div>
-                  <div id="information" align="left">
-                    <div>
-                      <b id="displayname">{{ member.name }}</b>
-                    </div>
-                    <div id="memberposition">
-                      {{ member.position }}
-                    </div>
-                    <br />
-                    <div id="department">
-                      Full-time/Intern :
-                      <span style="opacity: 0.75;">{{ member.type }}</span>
-                    </div>
-                    <div id="department">
-                      Department:
-                      <span style="opacity: 0.75;">{{ member.department }}</span>
-                    </div>
-                  </div>
-                </v-card>
+                      <div id="information" align="left">
+                        <div>
+                          <b id="displayname">{{ member.displayName }}</b>
+                        </div>
+                        <div id="memberposition">
+                          {{ member.position }}
+                        </div>
+                        <br />
+                        <div id="department">
+                          Full-time/Intern :
+                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                        </div>
+                        <div id="department">
+                          Department:
+                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                        </div>
+                      </div>
+                    </v-row>
+                  </v-card>
+                </div>
               </div>
             </div>
           </a-tab-pane>
@@ -124,36 +126,36 @@
               </div>
             </div>
             <!-- end search button -->
-            <div v-for="member in memberFilter" :key="member.id">
-              <div class="listmembers" v-if="member.department === 'Design'">
-                <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
-                  <div id="card-media">
-                    <md-card-media>
-                      <div id="circle">
-                        <img id="imgProfile" v-bind:src="member.image" />
+            <div class="listmembers">
+              <div v-for="member in memberFilter" :key="member.id">
+                <div v-if="member.department === 'Design'" style="width:100%; height:50%">
+                  <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
+                    <v-row>
+                      <div id="card-media" style="vertical-align: middle;">
+                        <div id="circle" align="center">
+                          <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
+                        </div>
                       </div>
-                    </md-card-media>
-                  </div>
-                  <div id="information" align="left">
-                    <div>
-                      <b id="displayname">{{ member.name }}</b>
-                    </div>
-                    <div id="memberposition">
-                      {{ member.position }}
-                    </div>
-                    <br />
-                    <div id="department">
-                      Full-time/Intern :
-                      <span style="opacity: 0.75;">{{ member.type }}</span>
-                    </div>
-                    <div id="department">
-                      Department:
-                      <span style="opacity: 0.75;">{{ member.department }}</span>
-                    </div>
-                  </div>
-                </v-card>
-                <!-- <br />
-                <br />-->
+                      <div id="information" align="left">
+                        <div>
+                          <b id="displayname">{{ member.displayName }}</b>
+                        </div>
+                        <div id="memberposition">
+                          {{ member.position }}
+                        </div>
+                        <br />
+                        <div id="department">
+                          Full-time/Intern :
+                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                        </div>
+                        <div id="department">
+                          Department:
+                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                        </div>
+                      </div>
+                    </v-row>
+                  </v-card>
+                </div>
               </div>
             </div>
           </a-tab-pane>
@@ -171,46 +173,43 @@
               </div>
             </div>
             <!-- end search button -->
-            <div v-for="member in memberFilter" :key="member.id">
-              <div class="listmembers" v-if="member.department === 'Marketing'">
-                <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
-                  <div id="card-media">
-                    <md-card-media>
-                      <div id="circle">
-                        <img id="imgProfile" v-bind:src="member.image" />
+            <div class="listmembers">
+              <div v-for="member in memberFilter" :key="member.id">
+                <div v-if="member.department === 'Marketing'" style="width:100%; height:50%">
+                  <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
+                    <v-row>
+                      <div id="card-media" style="vertical-align: middle;">
+                        <div id="circle" align="center">
+                          <v-img v-bind:src="member.image" id="imgProfile"> </v-img>
+                        </div>
                       </div>
-                    </md-card-media>
-                  </div>
-                  <div id="information" align="left">
-                    <div>
-                      <b id="displayname">{{ member.name }}</b>
-                    </div>
-                    <div id="memberposition">{{ member.position }}</div>
-                    <br />
-                    <div id="department">
-                      Full-time/Intern :
-                      <span style="opacity: 0.75;">{{ member.type }}</span>
-                    </div>
-                    <div id="department">
-                      Department:
-                      <span style="opacity: 0.75;">{{ member.department }}</span>
-                    </div>
-                  </div>
-                </v-card>
-                <!-- <br />
-                <br />-->
+                      <div id="information" align="left">
+                        <div>
+                          <b id="displayname">{{ member.displayName }}</b>
+                        </div>
+                        <div id="memberposition">
+                          {{ member.position }}
+                        </div>
+                        <br />
+                        <div id="department">
+                          Full-time/Intern :
+                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                        </div>
+                        <div id="department">
+                          Department:
+                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                        </div>
+                      </div>
+                    </v-row>
+                  </v-card>
+                </div>
               </div>
             </div>
           </a-tab-pane>
         </a-tabs>
       </div>
-      <div id="bottom-content">
-        <!-- พื้นที่ข้างล่างของ content  -->
-      </div>
     </md-content>
-    <div style="padding-bottom:5px">
-      <!-- ระยะห่าง manu ข้างล่างกับ content -->
-    </div>
+
     <BarRouter />
   </div>
 </template>
@@ -324,6 +323,10 @@ button {
   margin-top: 3px;
   margin-left: 15px;
   margin-right: 15px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   text-decoration: none;
 }
 #card-media {
@@ -342,22 +345,18 @@ button {
 }
 #imgProfile {
   /* margin-top: 17px; */
-  /* margin-top: 2px; */
   border-radius: 100%;
-  height: 80px;
-  width: 80px;
+  height: 77px;
+  width: 77px;
   object-fit: cover;
-  border: 4px solid #9daace;
-}
-#imgProfile:after {
+  border: 3px solid #9daace;
+  position: relative;
 }
 #circle {
+  border-radius: 100%;
+  border: 3px solid #ffffff;
   width: 84px;
   height: 84px;
-  background: rgb(255, 255, 255);
-  -moz-border-radius: 70px;
-  -webkit-border-radius: 70px;
-  border-radius: 70px;
 }
 #displayname {
   color: #0036c7;
