@@ -7,12 +7,10 @@
       <div>
         <a-tabs default-active-key="1" @change="callback">
           <a-tab-pane key="1" tab="Project">
-            <div>
-              <table style="width:100%; margin-bottom:10px">
-                <div style="margin-left:18px">
-                  <td align="left" style="font-size:20px; font-weight:550">Project</td>
-                </div>
-              </table>
+            <div style="width:100%; margin-bottom:10px">
+              <div style="margin-left:18px">
+                <div align="left" style="font-size:20px; font-weight:550">Project</div>
+              </div>
             </div>
             <ListProject />
           </a-tab-pane>

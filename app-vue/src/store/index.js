@@ -167,7 +167,7 @@ export default new Vuex.Store({
         position: 'Web Design',
         description: 'Commodo adipiscing ornare sit lorem sit tempus urna, vestibulum, neque.',
         status: 'WIP',
-        urlProject: 'https://cdn.auth0.com/blog/illustrations/vuejs.png',
+        urlProject: 'https://i.pinimg.com/564x/d3/7c/33/d37c33b2921a5df2fc85040e32b28f6c.jpg',
         date: [
           {
             id: 1,

@@ -15,7 +15,7 @@
                   v-model="search"
                   type="search"
                   placeholder="input search text"
-                  style="width: 50%"
+                  style="width: 70%"
                 />
 
                 <!-- <a-input-search

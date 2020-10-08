@@ -2,14 +2,11 @@
   <div>
     <ToolbarBack />
     <br />
-    <table style="margin: 60px 18px 30px 18px">
-      <td style="width:80px">
+    <v-row style="margin: 60px 0px 0px 0px">
+      <v-col cols="3" style="padding: 12px 0px 0px 18px">
         <img id="imgProject" v-bind:src="projectFunc.urlProject" alt="" />
-      </td>
-      <td>
-        <div style="margin-left:10px"></div>
-      </td>
-      <td style="vertical-align: middle; font-size:16px" align="left">
+      </v-col>
+      <v-col cols="9" style="vertical-align: middle; font-size:16px" align="left">
         <div>
           <b>{{ projectFunc.name }}</b>
         </div>
@@ -19,8 +16,8 @@
         <div style="padding-top: 8px; font-size:14px">
           {{ projectFunc.description }}
         </div>
-      </td>
-    </table>
+      </v-col>
+    </v-row>
     <v-row style="margin-left:6px; margin-right:6px;">
       <v-col>
         <v-card elevation="6">
@@ -348,9 +345,13 @@ div {
 #imgProject {
   margin-top: 2px;
   border-radius: 100%;
-  height: 80px;
-  width: 80px;
+  width: 20vmin;
+  height: 20vmin;
+  /* height: 75px; */
   object-fit: cover;
+}
+#imgProject::after {
+  display: block;
 }
 #position {
   color: #8f8f8f;

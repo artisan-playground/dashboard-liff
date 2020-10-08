@@ -1,17 +1,21 @@
 <template>
   <div>
     <div class="listProject">
-      <md-card id="card" align="left" v-for="project in projects" :key="project.id">
-        <table>
-          <td align="left" style="width:75% ">
-            <md-card-header id="title">
-              <div class="md-title">
-                <b style="line-height: 0px;">{{ project.name }}</b>
-              </div>
-            </md-card-header>
-            <md-card-content id="position">{{ project.position }}</md-card-content>
-          </td>
-          <td id="status" align="right">
+      <v-card
+        id="card"
+        style="text-decoration:none; color:black"
+        v-for="project in projects"
+        :key="project.id"
+        :to="{ name: 'project', params: { id: project.id } }"
+      >
+        <v-row>
+          <v-col cols="8" align="left" style="padding-bottom: 0px;">
+            <div class="md-title">
+              <b style="line-height: 0px;">{{ project.name }}</b>
+            </div>
+            <div id="position">{{ project.position }}</div>
+          </v-col>
+          <v-col cols="4" id="status" align="right" style="padding-bottom: 0px;">
             <md-chip
               class="md-accent"
               md-clickable
@@ -38,37 +42,30 @@
               ></span>
               {{ project.status }}
             </md-chip>
-          </td>
-        </table>
-        <md-card-content style="padding-top: 8px;">
-          <table>
-            <tr>
-              <div>{{ project.description }}</div>
-            </tr>
+          </v-col>
+        </v-row>
+        <v-row style="padding-top: 0px;">
+          <v-col>
+            <div align="left">{{ project.description }}</div>
+          </v-col>
+        </v-row>
 
-            <!-- <tr>
-            <div style="float:right;">
-              <td v-for="member in members" :key="member.id">
-                <img
-                  v-bind:src="member.image"
-                  style="width:33px; border-radius: 100px; margin-left:4px"
-                />
-              </td>
+        <v-row>
+          <v-col style="padding-top: 0px;">
+            <div style="float:right">
+              <vs-avatar-group float max="4">
+                <vs-avatar
+                  v-for="member in members"
+                  :key="member.id"
+                  style="border-radius: 100%; margin-left:3px; width:33px; height:33px;"
+                >
+                  <img v-bind:src="member.image" />
+                </vs-avatar>
+              </vs-avatar-group>
             </div>
-          </tr> -->
-
-            <vs-avatar-group float max="4" style="float:right; margin-top:10px;">
-              <vs-avatar
-                v-for="member in members"
-                :key="member.id"
-                style="border-radius: 100%; margin-left:3px; width:33px; height:33px;"
-              >
-                <img v-bind:src="member.image" />
-              </vs-avatar>
-            </vs-avatar-group>
-          </table>
-        </md-card-content>
-      </md-card>
+          </v-col>
+        </v-row>
+      </v-card>
     </div>
 
     <div style="padding-bottom:60px">
@@ -100,11 +97,6 @@ export default {
   padding-bottom: 2px;
   font-family: 'Roboto';
 }
-table {
-  border: none;
-  width: 100%;
-  padding-bottom: 0px;
-}
 #title {
   padding-bottom: 0px;
   font-size: 16px;
@@ -117,7 +109,6 @@ table {
 }
 #status {
   font-size: 10.5px;
-  padding-right: 16px;
   width: 25%;
 }
 #iconStatus {
@@ -126,11 +117,21 @@ table {
 }
 #card {
   margin: 3px 15px 24px 15px; /* ระยะห่างรอบๆ card */
+  padding-bottom: 10px;
   border-radius: 5px;
 }
 .md-title {
   font-size: 16px;
   margin-bottom: -1px; /* ระยะห่างระหว่างชื่อโปรเจคกับตำแหน่งงาน */
   line-height: 20px; /* ระยะห่างระหว่างบรรทัดของชื่อโปรเจค เวลาขึ้นบรรทัดใหม่ */
+}
+
+.row {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.col {
+  padding-bottom: 5px;
 }
 </style>
