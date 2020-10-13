@@ -31,7 +31,7 @@
             <!-- end search button -->
             <!-- list member Admin -->
             <div class="listmembers">
-              <div v-for="member in memberFilter" :key="member.id">
+              <div v-for="member in userFilter" :key="member.id">
                 <div v-if="member.department === 'HR/Admin'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
                     <v-row>
@@ -42,7 +42,7 @@
                       </div>
                       <div id="information" align="left">
                         <div>
-                          <b id="displayname">{{ member.displayName }}</b>
+                          <b id="displayname">{{ member.name }}</b>
                         </div>
                         <div id="memberposition">
                           {{ member.position }}
@@ -80,7 +80,7 @@
             <!-- end search button -->
             <!-- list Developer -->
             <div class="listmembers">
-              <div v-for="member in memberFilter" :key="member.id">
+              <div v-for="member in userFilter" :key="member.id">
                 <div v-if="member.department === 'Development'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
                     <v-row>
@@ -91,7 +91,7 @@
                       </div>
                       <div id="information" align="left">
                         <div>
-                          <b id="displayname">{{ member.displayName }}</b>
+                          <b id="displayname">{{ member.name }}</b>
                         </div>
                         <div id="memberposition">
                           {{ member.position }}
@@ -127,7 +127,7 @@
             </div>
             <!-- end search button -->
             <div class="listmembers">
-              <div v-for="member in memberFilter" :key="member.id">
+              <div v-for="member in userFilter" :key="member.id">
                 <div v-if="member.department === 'Design'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
                     <v-row>
@@ -174,7 +174,7 @@
             </div>
             <!-- end search button -->
             <div class="listmembers">
-              <div v-for="member in memberFilter" :key="member.id">
+              <div v-for="member in userFilter" :key="member.id">
                 <div v-if="member.department === 'Marketing'" style="width:100%; height:50%">
                   <v-card id="card" :to="{ name: 'profileMember', params: { id: member.id } }">
                     <v-row>
@@ -185,7 +185,7 @@
                       </div>
                       <div id="information" align="left">
                         <div>
-                          <b id="displayname">{{ member.displayName }}</b>
+                          <b id="displayname">{{ member.name }}</b>
                         </div>
                         <div id="memberposition">
                           {{ member.position }}
@@ -300,7 +300,7 @@ button {
   border: 1px solid #8f8f8f;
 }
 .listmembers {
-  margin: 0px 18px 0px 18px;
+  /* margin: 0px 18px 0px 18px; */
   background-color: #e9f0ff;
   padding-left: 0px;
   padding-right: 0px;

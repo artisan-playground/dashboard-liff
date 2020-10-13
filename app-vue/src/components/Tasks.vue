@@ -63,7 +63,7 @@ export default {
 
 <style>
 .listTasks {
-  margin: 0px 18px 0px 18px;
+  /* margin: 0px 18px 0px 18px; */
   background-color: #e9f0ff;
   padding-top: 15px;
   padding-bottom: 2px;

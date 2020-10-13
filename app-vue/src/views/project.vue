@@ -4,20 +4,21 @@
     <br />
     <v-row style="margin: 60px 0px 0px 0px">
       <v-col cols="3" style="padding: 12px 0px 0px 18px">
-        <img id="imgProject" v-bind:src="projectFunc.urlProject" alt="" />
+        <img id="imgProject" v-bind:src="dataProject.projectImage" alt="" />
       </v-col>
       <v-col cols="9" style="vertical-align: middle; font-size:16px" align="left">
         <div>
-          <b>{{ projectFunc.name }}</b>
+          <b>{{ dataProject.projectName }}</b>
         </div>
         <div id="position" style="">
-          {{ projectFunc.position }}
+          {{ dataProject.projectType }}
         </div>
         <div style="padding-top: 8px; font-size:14px">
-          {{ projectFunc.description }}
+          {{ dataProject.projectDetail }}
         </div>
       </v-col>
     </v-row>
+
     <v-row style="margin-left:6px; margin-right:6px;">
       <v-col>
         <v-card elevation="6">
@@ -45,10 +46,10 @@
     <!-- Date -->
     <v-row style="margin-left:6px; margin-right:6px;">
       <v-col v-if="project">
-        <v-card v-for="date in project.date" :key="date.id">
+        <v-card>
           <div style="padding-top:10px"><a-icon type="calendar" style="color:#105EFB" /></div>
           <div>
-            <b>{{ date.day }} {{ date.month }} {{ date.year }}</b>
+            <b>{{ dataProject.dueDate }}</b>
           </div>
           <div id="position" style="padding-bottom:10px">Release Date</div>
         </v-card>
@@ -68,13 +69,8 @@
           >
         </v-col>
       </v-row>
-      <div v-for="task in tasksFunc" :key="task.tasksId" style="margin-left:6px; margin-right:6px;">
-        <v-card
-          id="card"
-          align="left"
-          v-if="projectFunc.id == task.projectId"
-          :to="{ name: 'taskDetail', params: { id: task.tasksId } }"
-        >
+      <div v-for="task in dataTask" :key="task.id" style="margin-left:6px; margin-right:6px;">
+        <v-card id="card" align="left" :to="{ name: 'taskDetail', params: { id: task.id } }">
           <div style="padding-left:15px">
             <v-row>
               <v-col>
@@ -87,15 +83,14 @@
                   </b>
                 </v-row>
                 <v-row id="position">
-                  {{ task.taskTime }}
+                  {{ task.startTime }}
                 </v-row>
               </v-col>
               <v-col align="right" id="status">
-                <md-chip
+                <a-tag color="red"
                   class="md-accent"
                   md-clickable
-                  v-if="task.status == false"
-                  style="background-color:#F77B72; color:black; font-size: 11px; width:60.27px; text-align:center; font-weight:500;"
+                  v-if="task.isDone == false"
                 >
                   <span
                     id="iconStatus"
@@ -104,10 +99,9 @@
                     data-icon="carbon:warning"
                   ></span>
                   WIP
-                </md-chip>
-                <md-chip
-                  v-if="task.status == true"
-                  style="background-color:#4DD987; color:black; font-size: 11px; font-weight:500;"
+                </a-tag>
+                <a-tag color="green"
+                  v-if="task.isDone == true"
                 >
                   <span
                     id="iconStatus"
@@ -116,11 +110,11 @@
                     data-icon="octicon:check-circle-24"
                   ></span>
                   Done
-                </md-chip>
+                </a-tag>
               </v-col>
             </v-row>
             <v-row>
-              <div>{{ task.descriptonTask }}</div>
+              <div>{{ task.taskDetail }}</div>
             </v-row>
 
             <!-- list members -->
@@ -300,6 +294,7 @@
 import store from '../store/index.js'
 import ToolbarBack from '@/components/ToolbarBack.vue'
 import BarRouter from '@/components/BarRouter.vue'
+import gql from 'graphql-tag'
 export default {
   name: 'project',
   components: {
@@ -307,14 +302,51 @@ export default {
     BarRouter,
   },
   data() {
-    const projectId = this.$route.params.id
+    const projectId = parseInt(this.$route.params.id)
+
     return {
       project: store.state.projects.find(p => p.id === projectId),
       members: store.state.members,
       task: store.state.tasks,
       form: this.$form.createForm(this),
       visible: false,
+      dataProject: null,
+      dataTask: null,
     }
+  },
+  apollo: {
+    getProject: {
+      query: gql`
+        query($projectId: Int!) {
+          project(where: { id: $projectId }) {
+            id
+            projectName
+            projectType
+            projectImage
+            projectDetail
+            status
+            dueDate
+            tasks {
+              id
+              taskName
+              startTime
+              endTime
+              taskDetail
+              isDone
+            }
+          }
+        }
+      `,
+      variables() {
+        return {
+          projectId: parseInt(this.$route.params.id),
+        }
+      },
+      result({ data }) {
+        this.dataProject = data.project
+        this.dataTask = data.project.tasks
+      },
+    },
   },
 
   methods: {

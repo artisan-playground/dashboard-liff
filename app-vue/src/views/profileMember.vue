@@ -17,7 +17,7 @@
                 class="profile"
                 id="pictureUrl"
                 :src="
-                  member.image ||
+                  dataUser.image ||
                     'https://www.iconfinder.com/data/icons/facebook-51/32/FACEBOOK_LINE-01-512.png'
                 "
               />
@@ -43,7 +43,7 @@
           <!-- Name, Position , Status -->
           <a-row style="float:left; margin-bottom: 40px;">
             <a-row style="font-size:20px; color:#0036C7; font-weight:500">
-              {{ member.displayName }}
+              {{ dataUser.name }}
             </a-row>
             <a-row>
               Position
@@ -75,9 +75,10 @@
 </template>
 
 <script>
-import store from '../store/index.js'
+// import store from '../store/index.js'
 import ToolbarBack from '@/components/ToolbarBack.vue'
 import BarRouter from '@/components/BarRouter.vue'
+import gql from 'graphql-tag'
 
 export default {
   name: 'profileMember',
@@ -85,12 +86,41 @@ export default {
     ToolbarBack,
     BarRouter,
   },
-
+  methods: {},
+  apollo: {
+    getUser: {
+      query: gql`
+        query User($memberId: Int!) {
+          user(where: { id: $memberId }) {
+            id
+            name
+            image
+            email
+            department
+            position
+            type
+            skills
+          }
+        }
+      `,
+      variables() {
+        return {
+          memberId: parseInt(this.$route.params.id),
+        }
+      },
+      result({ data }) {
+        this.dataUser = data.user
+        console.log('We got some result!', data)
+      },
+    },
+  },
   data() {
-    const memberId = this.$route.params.id
     return {
-      member: store.state.members.find(m => m.id === memberId),
+      dataUser: null,
     }
+  },
+  mounted() {
+    console.log(this.$route.params.id)
   },
 }
 </script>

@@ -16,11 +16,10 @@
             <div id="position">{{ project.position }}</div>
           </v-col>
           <v-col cols="4" id="status" align="right" style="padding-bottom: 0px;">
-            <md-chip
+            <a-tag color="red"
               class="md-accent"
               md-clickable
               v-if="project.status == 'WIP'"
-              style="background-color:#F77B72; color:black; font-size: 11px; width:60.27px; text-align:center; font-weight:500;"
             >
               <span
                 id="iconStatus"
@@ -29,10 +28,9 @@
                 data-icon="carbon:warning"
               ></span>
               {{ project.status }}
-            </md-chip>
-            <md-chip
+            </a-tag>
+            <a-tag color="green"
               v-if="project.status == 'Done'"
-              style="background-color:#4DD987; color:black; font-size: 11px; font-weight:500;"
             >
               <span
                 id="iconStatus"
@@ -41,7 +39,7 @@
                 data-icon="octicon:check-circle-24"
               ></span>
               {{ project.status }}
-            </md-chip>
+            </a-tag>
           </v-col>
         </v-row>
         <v-row style="padding-top: 0px;">
@@ -84,14 +82,13 @@ export default {
       members: store.state.members,
     }
   },
-
   methods: {},
 }
 </script>
 
 <style scoped>
 .listProject {
-  margin: 0px 18px 0px 18px;
+  /* margin: 0px 18px 0px 18px; */
   background-color: #e9f0ff;
   padding-top: 15px;
   padding-bottom: 2px;

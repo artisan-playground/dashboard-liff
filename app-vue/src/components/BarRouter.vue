@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation fixed grow :value="value" color="#0036c7">
+  <v-bottom-navigation fixed grow color="#0036c7">
     <v-btn to="/" id="bottom-navigation">
       <span>Home</span>
       <a-icon id="icons" type="home" />
@@ -7,7 +7,7 @@
 
     <v-btn to="/projects" id="bottom-navigation">
       <span>Projects</span>
-      <a-icon id="icons" type="fund" />
+      <a-icon id="icons" type="project" />
     </v-btn>
 
     <v-btn to="/news" id="bottom-navigation">
@@ -17,7 +17,7 @@
 
     <v-btn to="/members" id="bottom-navigation">
       <span>Members</span>
-      <a-icon id="icons" type="usergroup-add" />
+      <a-icon id="icons" type="team" />
     </v-btn>
 
     <v-btn to="/profile" id="bottom-navigation">

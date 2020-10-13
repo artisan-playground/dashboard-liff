@@ -7,7 +7,6 @@
             >Project</v-col
           >
         </div>
-
         <v-col align="right">
           <a-input-search
             v-model="search"
@@ -20,10 +19,10 @@
             <a-select-option value="">
               <span style="font-size:10px">All</span>
             </a-select-option>
-            <a-select-option value="WIP">
+            <a-select-option value="undone">
               <span style="font-size:10px">WIP</span>
             </a-select-option>
-            <a-select-option value="Done">
+            <a-select-option value="done">
               <span style="font-size:10px">Done</span>
             </a-select-option>
           </a-select>
@@ -41,16 +40,15 @@
         <v-row>
           <v-col cols="8" align="left" style="padding-bottom: 0px;">
             <div class="md-title">
-              <b style="line-height: 0px;">{{ project.name }}</b>
+              <b style="line-height: 0px;">{{ project.projectName }}</b>
             </div>
-            <div id="position">{{ project.position }}</div>
+            <div id="position">{{ project.projectType }}</div>
           </v-col>
           <v-col cols="4" id="status" align="right" style="padding-bottom: 0px;">
-            <md-chip
+            <a-tag color="red"
               class="md-accent"
               md-clickable
-              v-if="project.status == 'WIP'"
-              style="background-color:#F77B72; color:black; font-size: 11px; width:60.27px; text-align:center; font-weight:500;"
+              v-if="project.status == 'undone'"
             >
               <span
                 id="iconStatus"
@@ -58,11 +56,10 @@
                 data-inline="false"
                 data-icon="carbon:warning"
               ></span>
-              {{ project.status }}
-            </md-chip>
-            <md-chip
-              v-if="project.status == 'Done'"
-              style="background-color:#4DD987; color:black; font-size: 11px; font-weight:500;"
+              WIP
+            </a-tag>
+            <a-tag color="green"
+              v-if="project.status == 'done'"
             >
               <span
                 id="iconStatus"
@@ -70,13 +67,13 @@
                 data-inline="false"
                 data-icon="octicon:check-circle-24"
               ></span>
-              {{ project.status }}
-            </md-chip>
+              Done
+            </a-tag>
           </v-col>
         </v-row>
         <v-row style="padding-top: 0px;">
           <v-col>
-            <div align="left">{{ project.description }}</div>
+            <div align="left">{{ project.projectDetail }}</div>
           </v-col>
         </v-row>
 
@@ -85,7 +82,7 @@
             <div style="float:right">
               <vs-avatar-group float max="4">
                 <vs-avatar
-                  v-for="member in members"
+                  v-for="member in project.members"
                   :key="member.id"
                   style="border-radius: 100%; margin-left:3px; width:33px; height:33px;"
                 >
@@ -106,14 +103,48 @@
 
 <script>
 import store from '../store/index.js'
+import gql from 'graphql-tag'
+
 export default {
   name: 'ListProjectAll',
   data() {
     return {
       search: '',
-      projects: store.state.projects,
+      // projects: store.state.projects,
+      projects: [],
       members: store.state.members,
       currentFilter: '',
+      dataMember: null,
+      dataProject: null
+    }
+  },
+  apollo: {
+    projects: {
+      query: gql`
+        query {
+          projects {
+            id
+            projectName
+            projectType
+            projectImage
+            projectDetail
+            status
+            dueDate
+            members {
+              id
+              name
+              image
+            }
+          }
+        }
+      `,
+      result({ data }) {
+        this.dataProject = data.projects
+        // this.dataProject.forEach(element => {
+        // });
+        console.log(this.dataProject);
+        // this.dataMember = data.projects.members.user
+      }
     }
   },
   computed: {
@@ -127,33 +158,17 @@ export default {
           filtered = item.status == filterStatus
           return filtered
         } else {
-          return item.name.indexOf(text) > -1
+          return item.projectName.indexOf(text) > -1
         }
       })
     },
-
-    // selectFilter() {
-    //   let filterStatus = this.currentFilter.trim()
-    //   return this.lists.filter(status => {
-    //     let filtered = true
-    //     if (filterStatus && filterStatus.length > 0) {
-    //       filtered = status.status == filterStatus
-    //     }
-    //     return filtered
-    //   })
-    // },
   },
-  // methods: {
-  //   viewProject(projectid) {
-  //     this.$router.push({ name: 'project', params: { id: list.id } })
-  //   },
-  // },
 }
 </script>
 
 <style scoped>
 .listProject {
-  margin: 0px 18px 0px 18px;
+  /* margin: 0px 18px 0px 18px; */
   background-color: #e9f0ff;
   padding-top: 15px;
   padding-bottom: 2px;
