@@ -88,8 +88,7 @@
               </v-col>
               <v-col align="right" id="status">
                 <a-tag color="red"
-                  class="md-accent"
-                  md-clickable
+                  style="margin-right: 0px;"
                   v-if="task.isDone == false"
                 >
                   <span
@@ -101,6 +100,7 @@
                   WIP
                 </a-tag>
                 <a-tag color="green"
+                  style="margin-right: 0px;"
                   v-if="task.isDone == true"
                 >
                   <span
@@ -122,7 +122,7 @@
               <v-col align="right" style="padding-right: 16px;">
                 <vs-avatar-group float max="4" style="float:right; margin-top:10px;">
                   <vs-avatar
-                    v-for="member in members"
+                    v-for="member in task.members"
                     :key="member.id"
                     style="border-radius: 100%; margin-left:3px; width:33px; height:33px;"
                   >
@@ -312,6 +312,7 @@ export default {
       visible: false,
       dataProject: null,
       dataTask: null,
+      dataMemberTask: null
     }
   },
   apollo: {
@@ -333,6 +334,10 @@ export default {
               endTime
               taskDetail
               isDone
+              members {
+                id
+                image
+              }
             }
           }
         }

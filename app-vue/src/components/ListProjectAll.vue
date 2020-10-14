@@ -46,7 +46,7 @@
           </v-col>
           <v-col cols="4" id="status" align="right" style="padding-bottom: 0px;">
             <a-tag color="red"
-              class="md-accent"
+              style="margin-right: 0px;"
               md-clickable
               v-if="project.status == 'undone'"
             >
@@ -60,6 +60,7 @@
             </a-tag>
             <a-tag color="green"
               v-if="project.status == 'done'"
+              style="margin-right: 0px;"
             >
               <span
                 id="iconStatus"

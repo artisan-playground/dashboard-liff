@@ -5,7 +5,7 @@
         <tr>
           <td align="left">
             <!-- style="width:30%" -->
-            <img class="logo" src="../assets/logo4.png" />
+            <img class="logo" src="../assets/1_1.svg" />
             <!-- style="width:18%;" -->
           </td>
 
