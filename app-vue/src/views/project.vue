@@ -294,6 +294,7 @@
 import store from '../store/index.js'
 import ToolbarBack from '@/components/ToolbarBack.vue'
 import BarRouter from '@/components/BarRouter.vue'
+// import * as gqlQuery  from '../constants/graphql'
 import gql from 'graphql-tag'
 export default {
   name: 'project',

@@ -5,8 +5,9 @@
     <div style="margin :60px 18px 0 18px">
       <!-- Done button -->
       <v-btn
+      v-model="isDone"
         id="buttonStatus"
-        v-if="taskFunc.status == false"
+        v-if="taskFunc.isDone == false"
         style="width:100%; text-transform: capitalize; color: #000000;"
         elevation="6"
         color="#F77B72"
@@ -31,8 +32,9 @@
 
       <!-- WIP button -->
       <v-btn
+      v-model="isDone"
         id="buttonStatus"
-        v-if="taskFunc.status == true"
+        v-if="dataTask.isDone == true"
         style="width:100%; text-transform: capitalize; color: #000000;"
         elevation="6"
         color="#4DD987"
@@ -115,12 +117,12 @@
     <v-row style="margin-left:6px; margin-right:6px;">
       <v-col
         ><span style="float:left; font-size:20px; font-weight:550">{{
-          taskFunc.taskName
+          dataTask.taskName
         }}</span></v-col
       >
     </v-row>
     <div class="detailTask">
-      {{ taskFunc.descriptonTask }}
+      {{ dataTask.taskDetail }}
     </div>
 
     <!-- Clipboard -->
@@ -134,21 +136,6 @@
         ></span>
         <b style="float: left; font-size:16px">Clipboard</b>
       </v-col>
-      <!-- <v-col>
-        <v-btn
-          @click="onFileChange()"
-          color="primary"
-          style="float:right; text-transform: capitalize; background-color: #105EFB; border-radius: 15px;"
-        >
-          <span
-            class="iconify"
-            data-inline="false"
-            data-icon="ant-design:upload-outlined"
-            style="color: #ffffff; font-size: 14px; margin-right:3px;"
-          ></span>
-          Upload
-        </v-btn>
-      </v-col> -->
     </v-row>
 
     <!-- upload file -->
@@ -276,15 +263,62 @@ function getBase64(file) {
     reader.onerror = error => reject(error)
   })
 }
+
+const TOGGLE_STATUS = gql`
+  mutation UpdateTask($taskId:Int!,$data: TaskUpdateInput!) {
+    updateOneTask(where: {id:$taskId}, data: $data) {
+      id
+      isDone
+    }
+  }`
+
 import ToolbarBack from '@/components/ToolbarBack.vue'
+import gql from 'graphql-tag'
 import store from '../store/index.js'
 export default {
   name: 'taskDetail',
   components: {
     ToolbarBack,
   },
+  apollo: {
+    getProject: {
+      query: gql`
+        query Task($taskId: Int!) {
+          task(where: { id: $taskId }) {
+            id
+            isDone
+            taskName
+            taskDetail
+            project {
+              id
+              projectName
+              projectType
+            }
+            members {
+              id
+              name
+              image
+            }
+          }
+        }
+      `,
+      variables() {
+        return {
+          taskId: parseInt(this.$route.params.id),
+        }
+      },
+      result({ data }) {
+        this.dataTask = data.task
+        this.dataProject = data.task.project
+      },
+    },
+  },
+
   data() {
     return {
+      dataTask:null,
+      dataProject:null,
+      isDone: false,
       project: store.state.projects,
       task: store.state.tasks,
 
@@ -343,7 +377,36 @@ export default {
     },
   },
   methods: {
-    changeStatus() {
+
+    handleToggle: function () {
+      this.$apollo.mutate({
+        mutation: TOGGLE_STATUS,
+        variables: {
+          taskId: parseInt(this.$route.params.id),
+          label: this.isDone
+        }
+      }) 
+    },
+
+    async changeStatus() {
+      await this.$apollo.mutate({
+        mutation: gql`mutation UpdateTask($taskId:Int!,$data: TaskUpdateInput!) {
+          updateOneTask(where: {id:$taskId}, data: $label) {
+            id
+            isDone
+          }
+        }`,
+  
+        variables: {
+          taskId: parseInt(this.$route.params.id),
+          label: this.isDone
+        },
+        result({ data }) {
+          this.isDone = data.task.isDone
+        }
+        
+      })
+
       console.log('ค่าเริ่มต้น ' + this.taskFunc.status)
       if (this.taskFunc.status == false) {
         this.taskFunc.status = true

@@ -1,62 +1,50 @@
 <template>
   <div>
-    <div>
-      <table style="width:100%; margin-bottom:10px">
-        <div style="margin-left:18px">
-          <td align="left" style="font-size:20px; font-weight:550">Event</td>
-        </div>
-        <td align="right"></td>
-      </table>
-    </div>
+    <div align="left" style="margin-left:18px; margin-bottom:20px; font-size:20px; font-weight:550">Event</div>
 
     <div class="news">
-      <md-card id="card" align="left" v-for="data in news" :key="data.id">
-        <table style="width:100% ">
+      <v-card id="card" align="left" v-for="data in news" :key="data.id">
+        <div>
+          <v-row style="margin:auto; padding:auto;">
           <!-- Date -->
-          <td style="width:20%" id="date">
-            <center>
-              <tr style="color:#8F8F8F">
-                {{
-                  data.day
-                }}
-              </tr>
-              <tr>
-                <b>{{ data.date }}</b>
-              </tr>
-              <tr style="color:#8F8F8F">
-                {{
-                  data.month
-                }}
-              </tr>
-            </center>
-          </td>
+          <v-col cols="2" id="date" style="margin:auto;">
+            <v-row style="color:#8F8F8F;">
+              <span style="text-align: center;">{{data.day}}</span>
+            </v-row>
+            <v-row>
+              <div><b style=" text-align: center;">{{ data.date }}</b></div>
+            </v-row>
+            <v-row style="color:#8F8F8F">
+              <div>{{ data.month }}</div>
+            
+            </v-row>
+          </v-col>
           <!-- End Date -->
 
           <!-- vertical line -->
-          <td class="vl"></td>
+          <v-col cols="1" class="vl"></v-col>
 
           <!-- Description -->
-          <td style="width:80%; padding-left:10px">
-            <tr>
+          <v-col cols="9" style="padding-left:0px; padding-top:0px; padding-bottom:0px;">
+            <v-row>
               <!-- Description Event -->
-              <td style="width:75%; vertical-align: bottom; ">
+              <v-col cols="7" style="padding-left:0px;">
                 <div>
-                  <b style="line-height:1px">{{ data.name }}</b>
+                  <b>{{ data.name }}</b>
                 </div>
-                <!-- <tr>
+                <!-- <v-row>
                   {{
                     data.description
                   }}
-                </tr> -->
-              </td>
+                </v-row> -->
+              </v-col>
 
               <!-- Important Icon -->
-              <td align="right" style="width:5%;">
-                <md-chip
-                  class="md-accent"
-                  md-clickable
+              <v-col cols="5">
+                <a-tag
+                  style="float:right;"
                   v-if="data.status == 'Important'"
-                  style="margin:10px 5px 5px 5px ; background-color:#FFE24D; color:black; font-size: 11px; width:90px; text-align:center; font-weight:550;"
+                  color="orange"
                 >
                   <span
                     id="iconStatus"
@@ -67,20 +55,21 @@
                   ></span>
 
                   {{ data.status }}
-                </md-chip>
-              </td>
-            </tr>
+                </a-tag>
+              </v-col>
+            </v-row>
 
             <!-- Description Event -->
-            <div>
-              <td style="width:80%;">
+            
+              <v-row>
                 {{ data.description }}
-              </td>
-            </div>
+              </v-row>
+            
 
             <!-- Member -->
-            <tr style="float:right; padding-left:10px;">
-              <vs-avatar-group
+            <v-row style="float:right; padding-left:10px;">
+              <v-col>
+                <vs-avatar-group
                 float
                 max="4"
                 style="margin-top:5px; margin-bottom:14px; margin-right: 5px;"
@@ -93,10 +82,14 @@
                   <img v-bind:src="member.image" />
                 </vs-avatar>
               </vs-avatar-group>
-            </tr>
-          </td>
-        </table>
-      </md-card>
+              </v-col>
+              
+            </v-row>
+          </v-col>
+        </v-row>
+        </div>
+        
+      </v-card>
     </div>
   </div>
 </template>
@@ -120,9 +113,6 @@ div {
   font-family: 'Roboto';
 }
 .news {
-  margin: 0px 18px 0px 18px;
-  background-color: #e9f0ff;
-  padding-top: 15px;
   padding-bottom: 5px;
 }
 #card {
@@ -139,7 +129,7 @@ div {
   vertical-align: -9%;
 }
 #date {
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 .vl {
   border-left: 0.5px solid grey;

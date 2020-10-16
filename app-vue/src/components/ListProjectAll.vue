@@ -2,20 +2,14 @@
   <div>
     <div>
       <v-row style="width:100%; margin-bottom:10px">
-        <div style="margin-left:18px">
-          <v-col align="left" style="font-size:20px; font-weight:550; padding-left: 0;"
-            >Project</v-col
-          >
-        </div>
-        <v-col align="right">
+        <v-col align="right" style="padding-right: 0px; padding-left: 0px;">
           <a-input-search
             v-model="search"
             type="search"
             placeholder="input search text"
-            style="width: 60%"
+            style="width: 73%"
           />
-          &nbsp;
-          <a-select v-model="currentFilter" style="width: 28%; margin-right:18px;">
+          <a-select v-model="currentFilter" style="width: 20%; margin-right:18px;">
             <a-select-option value="">
               <span style="font-size:10px">All</span>
             </a-select-option>
@@ -104,7 +98,8 @@
 
 <script>
 import store from '../store/index.js'
-import gql from 'graphql-tag'
+import * as gqlQuery  from '../constants/graphql'
+// import gql from 'graphql-tag'
 
 export default {
   name: 'ListProjectAll',
@@ -121,24 +116,8 @@ export default {
   },
   apollo: {
     projects: {
-      query: gql`
-        query {
-          projects {
-            id
-            projectName
-            projectType
-            projectImage
-            projectDetail
-            status
-            dueDate
-            members {
-              id
-              name
-              image
-            }
-          }
-        }
-      `,
+      query: gqlQuery.ALL_PROJECT_QUERY
+      ,
       result({ data }) {
         this.dataProject = data.projects
         // this.dataProject.forEach(element => {
@@ -169,10 +148,6 @@ export default {
 
 <style scoped>
 .listProject {
-  /* margin: 0px 18px 0px 18px; */
-  background-color: #e9f0ff;
-  padding-top: 15px;
-  padding-bottom: 2px;
   font-family: 'Roboto';
 }
 #title {

@@ -1,15 +1,19 @@
 <template>
   <div style="position: fixed; z-index:10; width:100%">
     <md-toolbar class="toolbar" md-elevation="1">
-      <table style="border:none; width:100% ">
-        <tr>
-          <td align="left">
+      <div style="border:none; width:100% ">
+        <v-row>
+          <v-col align="left">
             <!-- style="width:30%" -->
             <img class="logo" src="../assets/1_1.svg" />
             <!-- style="width:18%;" -->
-          </td>
+          </v-col>
 
-          <td align="right">
+          <v-col>
+            <div class="title">{{ msg }}</div>
+          </v-col>
+
+          <v-col align="right">
             <div class="profile">
               <img
                 id="pictureUrl"
@@ -20,9 +24,9 @@
               />
               <h3 id="displayName" style="display:inline">{{ profileStore.displayName }}</h3>
             </div>
-          </td>
-        </tr>
-      </table>
+          </v-col>
+        </v-row>
+      </div>
     </md-toolbar>
   </div>
 </template>
@@ -33,6 +37,9 @@
 import { mapState } from 'vuex'
 export default {
   name: 'Toolbar',
+  props: {
+    msg: String
+  },
   computed: {
     ...mapState({
       profileStore: store => store.profile,
@@ -78,6 +85,15 @@ export default {
 p {
   border-bottom: 1px dashed #ddd;
 } */
+div {
+  font-family: 'Roboto';
+}
+.title {
+  color:white; 
+  margin-top:17px; 
+  font-weight:380;
+  font-size: 18px;
+}
 #displayName {
   color: white;
   margin-top: 1em;
@@ -96,7 +112,8 @@ p {
   /* margin-left: 40%; */
 }
 .logo {
-  margin: 0px 10px 0px 15px;
+  margin: 17px 10px 0px 15px;
+  vertical-align: middle;
   width: 22.5px;
 }
 .toolbar {

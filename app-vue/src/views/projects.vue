@@ -1,7 +1,7 @@
 <template>
   <div class="project">
     <!-- <h1>This is an about page</h1> -->
-    <Toolbar />
+    <Toolbar msg="Project"/>
 
     <md-content>
       <br />

@@ -1,7 +1,7 @@
 <template>
   <div class="project">
     <!-- <h1>This is an about page</h1> -->
-    <Toolbar />
+    <Toolbar msg="Members"/>
     <br />
     <md-content id="content">
       <div>
@@ -10,12 +10,11 @@
           <a-tab-pane key="1" tab="HR/Admin">
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
-              <div align="right" style="padding-right:18px">
+              <div align="right" style="padding-right:18px; padding-left:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
-                  style="width: 70%"
                 />
 
                 <!-- <a-input-search
@@ -68,12 +67,11 @@
           <a-tab-pane key="2" tab="Development">
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
-              <div align="right" style="padding-right:18px">
+              <div align="right" style="padding-right:18px; padding-left:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
-                  style="width: 50%"
                 />
               </div>
             </div>
@@ -116,12 +114,11 @@
           <a-tab-pane key="3" tab="Design" force-render>
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
-              <div align="right" style="padding-right:18px">
+              <div align="right" style="padding-right:18px; padding-left:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
-                  style="width: 50%"
                 />
               </div>
             </div>
@@ -163,12 +160,11 @@
           <a-tab-pane key="4" tab="Digital Marketing">
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
-              <div align="right" style="padding-right:18px">
+              <div align="right" style="padding-right:18px; padding-left:18px">
                 <a-input-search
                   v-model="search"
                   type="search"
                   placeholder="input search text"
-                  style="width: 50%"
                 />
               </div>
             </div>
@@ -218,33 +214,20 @@
 // @ is an alias to /src
 import Toolbar from '@/components/Toolbar.vue'
 import BarRouter from '@/components/BarRouter.vue'
-import store from '../store/index.js'
-import gql from 'graphql-tag'
+// import store from '../store/index.js'
+import * as gqlQuery  from '../constants/graphql'
 export default {
-  name: 'member1',
+  name: 'members',
   components: {
-    Toolbar,
+    Toolbar, 
     BarRouter,
   },
   apollo: {
-    users: gql`
-      query {
-        users {
-          id
-          name
-          image
-          email
-          department
-          position
-          type
-          skills
-        }
-      }
-    `,
+    users: gqlQuery.ALL_MEMBER_QUERY
   },
   data() {
     return {
-      members: store.state.members,
+      // members: store.state.members,
       search: '',
       displayName: '',
       name: '',
@@ -282,7 +265,7 @@ div {
 #bottom-content {
   /* พื้นที่ข้างล่างของ content */
   margin: 0px 18px 0px 18px;
-  background-color: #e9f0ff;
+  /* background-color: #e9f0ff; */
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 15px;
@@ -301,7 +284,7 @@ button {
 }
 .listmembers {
   /* margin: 0px 18px 0px 18px; */
-  background-color: #e9f0ff;
+  /* background-color: #e9f0ff; */
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 15px;

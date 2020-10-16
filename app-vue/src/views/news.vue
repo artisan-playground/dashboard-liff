@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Toolbar />
+    <Toolbar msg="News" />
     <br />
     <br />
     <br />

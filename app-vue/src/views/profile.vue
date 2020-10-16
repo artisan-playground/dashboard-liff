@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <Toolbar />
+    <Toolbar msg="Profile" />
     <br />
     <div style="margin-top:60px">
       <Profile />
