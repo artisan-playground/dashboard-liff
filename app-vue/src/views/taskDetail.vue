@@ -7,7 +7,7 @@
       <v-btn
       v-model="isDone"
         id="buttonStatus"
-        v-if="taskFunc.isDone == false"
+        v-if="dataTask.isDone == false"
         style="width:100%; text-transform: capitalize; color: #000000;"
         elevation="6"
         color="#F77B72"
@@ -63,8 +63,8 @@
     </div>
 
     <!-- Dashboard -->
-    <div v-for="project in project" :key="project.id">
-      <div v-if="project.id == taskFunc.projectId">
+    <div>
+      <div>
         <v-row style="margin-left:6px; margin-right:6px;">
           <v-col>
             <v-card elevation="6">
@@ -77,7 +77,7 @@
                 ></span>
               </div>
               <div>
-                <b>{{ project.name }}</b>
+                <b>{{ dataProject.projectName }}</b>
               </div>
               <div id="position" style="padding-bottom:10px">Project name</div>
             </v-card>
@@ -87,7 +87,7 @@
               <div style="padding-top:10px">
                 <a-icon type="clock-circle" style="color:#0036c7; font-size: 22px;" />
               </div>
-              <div><b>10/09/2020</b></div>
+              <div><b>{{ dataProject.dueDate }}</b></div>
               <div id="position" style="padding-bottom:10px">Due date</div>
             </v-card>
           </v-col>
@@ -103,8 +103,16 @@
                   style="color: #0036c7; font-size: 22px;"
                 ></span>
               </div>
-              <div>
-                <b>pic of member</b>
+              <div class="center con-avatars">
+                <vs-avatar-group>
+                  <vs-avatar circle
+                    v-for="member in dataProject.members"
+                    :key="member.id"
+                  >
+                    <img v-bind:src="member.image">
+                  </vs-avatar>
+                </vs-avatar-group>
+
               </div>
               <div id="position" style="padding-bottom:10px">Team</div>
             </v-card>
@@ -293,6 +301,11 @@ export default {
               id
               projectName
               projectType
+              dueDate
+              members {
+              id
+              image
+              }
             }
             members {
               id
@@ -310,6 +323,7 @@ export default {
       result({ data }) {
         this.dataTask = data.task
         this.dataProject = data.task.project
+        this.dataMember = data.task.member
       },
     },
   },
@@ -318,6 +332,7 @@ export default {
     return {
       dataTask:null,
       dataProject:null,
+      dataMember:null,
       isDone: false,
       project: store.state.projects,
       task: store.state.tasks,

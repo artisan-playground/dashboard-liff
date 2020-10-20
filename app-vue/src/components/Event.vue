@@ -7,12 +7,12 @@
         <div>
           <v-row style="margin:auto; padding:auto;">
           <!-- Date -->
-          <v-col cols="2" id="date" style="margin:auto;">
+          <v-col cols="2" id="date" style="margin-bottom:auto; margin-top:auto; padding-left: 8%;">
             <v-row style="color:#8F8F8F;">
               <span style="text-align: center;">{{data.day}}</span>
             </v-row>
             <v-row>
-              <div><b style=" text-align: center;">{{ data.date }}</b></div>
+              <div><b style="text-align: center;">{{ data.date }}</b></div>
             </v-row>
             <v-row style="color:#8F8F8F">
               <div>{{ data.month }}</div>
@@ -117,7 +117,6 @@ div {
 }
 #card {
   margin: 3px 15px 24px 15px; /* ระยะห่างรอบๆ card */
-  border-radius: 5px;
 }
 #profileImg {
   width: 33px;

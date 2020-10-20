@@ -96,7 +96,7 @@ template {
 }
 .news {
   margin: 0px 18px 0px 18px;
-  background-color: #e9f0ff;
+  /* background-color: #e9f0ff; */
   padding-top: 15px;
   /* padding-left: 15px;
   padding-right: 15px; */
@@ -104,7 +104,6 @@ template {
 }
 #card {
   padding: 15px 15px 0 15px;
-  border-radius: 5px;
   /* เงากรอบขาว ระยะเงาด้านขวากับกรอบ ระยะเงาด้านล่างกับกรอบ ความฟุ่งของเงา สีของเงา*/
   box-shadow: 1.5px 1.5px 5px #b1b1b1;
   margin-bottom: 24px;

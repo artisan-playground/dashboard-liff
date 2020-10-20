@@ -4,7 +4,7 @@
     <br />
     <v-row style="margin: 60px 0px 0px 0px">
       <v-col cols="3" style="padding: 12px 0px 0px 18px">
-        <img id="imgProject" v-bind:src="dataProject.projectImage" alt="" />
+        <img id="imgProject" v-bind:src="dataProject.projectImage" />
       </v-col>
       <v-col cols="9" style="vertical-align: middle; font-size:16px" align="left">
         <div>
@@ -23,21 +23,26 @@
       <v-col>
         <v-card elevation="6">
           <div style="padding-top:10px"><a-icon type="carry-out" style="color:#105EFB" /></div>
-          <div><b>2</b></div>
+
+            <b>{{ tasksDone }}</b>
           <div id="position" style="padding-bottom:10px">Done Task</div>
         </v-card>
       </v-col>
       <v-col>
         <v-card elevation="6">
-          <div style="padding-top:10px"><a-icon type="smile" style="color:#105EFB" /></div>
-          <div><b>3</b></div>
-          <div id="position" style="padding-bottom:10px">Developer</div>
+          <div style="padding-top:10px">
+            <a-icon type="smile" style="color:#105EFB" />
+          </div>
+          <div>
+            <b>{{ dataProject.members.length }}</b>
+          </div>
+          <div id="position" style="padding-bottom:10px">Members</div>
         </v-card>
       </v-col>
       <v-col>
         <v-card elevation="6">
           <div style="padding-top:10px"><a-icon type="profile" style="color:#105EFB" /></div>
-          <div><b>2</b></div>
+          <div><b>{{ tasksUndone }}</b></div>
           <div id="position" style="padding-bottom:10px">Today's Task</div>
         </v-card>
       </v-col>
@@ -47,7 +52,9 @@
     <v-row style="margin-left:6px; margin-right:6px;">
       <v-col v-if="project">
         <v-card>
-          <div style="padding-top:10px"><a-icon type="calendar" style="color:#105EFB" /></div>
+          <div style="padding-top:10px">
+            <a-icon type="calendar" style="color:#105EFB" />
+          </div>
           <div>
             <b>{{ dataProject.dueDate }}</b>
           </div>
@@ -62,9 +69,9 @@
         <v-col><span style="float:left; font-size:20px; font-weight:550">Task</span></v-col>
         <v-col>
           <v-btn
-            @click="showDrawer()"
             color="primary"
-            style="float:right; text-transform: capitalize; background-color: #105EFB; border-radius: 15px;"
+            style="float:right; text-transform: capitalize; background-color: #105EFB;"
+            :to="{ name: 'createTask', params: { id: dataProject.id } }"
             ><a-icon type="plus-circle" style="margin-right:2.5px" />Create</v-btn
           >
         </v-col>
@@ -87,10 +94,7 @@
                 </v-row>
               </v-col>
               <v-col align="right" id="status">
-                <a-tag color="red"
-                  style="margin-right: 0px;"
-                  v-if="task.isDone == false"
-                >
+                <a-tag color="red" style="margin-right: 0px;" v-if="task.isDone == false">
                   <span
                     id="iconStatus"
                     class="iconify"
@@ -99,10 +103,7 @@
                   ></span>
                   WIP
                 </a-tag>
-                <a-tag color="green"
-                  style="margin-right: 0px;"
-                  v-if="task.isDone == true"
-                >
+                <a-tag color="green" style="margin-right: 0px;" v-if="task.isDone == true">
                   <span
                     id="iconStatus"
                     class="iconify"
@@ -138,154 +139,6 @@
     <div style="padding-bottom:90px">
       <!-- ระยะห่าง manu ข้างล่างกับ content -->
     </div>
-
-    <!-- show drawer -->
-    <a-drawer
-      title="Create Tasks"
-      :width="320"
-      :visible="visible"
-      :body-style="{ paddingBottom: '80px' }"
-      @close="onClose"
-    >
-      <a-form :form="form" layout="vertical" hide-required-mark>
-        <a-row :gutter="16">
-          <a-form-item label="Task name">
-            <a-input
-              v-decorator="[
-                'taskName',
-                {
-                  rules: [{ required: true, message: 'Please enter task name' }],
-                },
-              ]"
-              placeholder="Please enter task name"
-            />
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="16">
-          <a-form-item label="Url">
-            <a-input
-              v-decorator="[
-                'url',
-                {
-                  rules: [{ required: true, message: 'please enter url' }],
-                },
-              ]"
-              style="width: 100%"
-              addon-before="http://"
-              addon-after=".com"
-              placeholder="please enter url"
-            />
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="16">
-          <a-form-item label="Members">
-            <a-input
-              v-decorator="[
-                'owner',
-                {
-                  rules: [{ required: true, message: 'Please mention member' }],
-                },
-              ]"
-              placeholder="@ mention member"
-            >
-            </a-input>
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="16">
-          <a-form-item label="Type">
-            <a-input
-              v-decorator="[
-                'type',
-                {
-                  rules: [{ required: true, message: 'Please choose the type' }],
-                },
-              ]"
-              placeholder="Please choose the type"
-            >
-            </a-input>
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="16">
-          <a-form-item label="Approver">
-            <a-input
-              v-decorator="[
-                'approver',
-                {
-                  rules: [{ required: true, message: 'Please mention people' }],
-                },
-              ]"
-              placeholder="@ mention people"
-            >
-            </a-input>
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="16">
-          <a-form-item label="DateTime">
-            <a-col :span="12">
-              <a-date-picker
-                v-decorator="[
-                  'dateTime',
-                  {
-                    rules: [{ required: true, message: 'Please choose the dateTime' }],
-                  },
-                ]"
-                style="width: 100%"
-                :get-popup-container="trigger => trigger.parentNode"
-                placeholder="Start date"
-              />
-            </a-col>
-            <a-col :span="12">
-              <a-date-picker
-                v-decorator="[
-                  'dateTime',
-                  {
-                    rules: [{ required: true, message: 'Please choose the dateTime' }],
-                  },
-                ]"
-                style="width: 100%"
-                :get-popup-container="trigger => trigger.parentNode"
-                placeholder="End date"
-              />
-            </a-col>
-          </a-form-item>
-        </a-row>
-        <a-row :gutter="16">
-          <a-form-item label="Description">
-            <a-textarea
-              v-decorator="[
-                'description',
-                {
-                  rules: [{ required: true, message: 'Please enter url description' }],
-                },
-              ]"
-              :rows="4"
-              placeholder="Task description"
-            />
-          </a-form-item>
-        </a-row>
-      </a-form>
-      <div
-        :style="{
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-          width: '100%',
-          borderTop: '1px solid #e9e9e9',
-          padding: '10px 16px',
-          background: '#fff',
-          textAlign: 'right',
-          zIndex: 1,
-        }"
-      >
-        <a-button :style="{ marginRight: '8px' }" @click="onClose">
-          Cancel
-        </a-button>
-        <a-button type="primary" @click="onClose">
-          Submit
-        </a-button>
-      </div>
-    </a-drawer>
-    <!-- end drawer -->
     <BarRouter />
   </div>
 </template>
@@ -304,7 +157,6 @@ export default {
   },
   data() {
     const projectId = parseInt(this.$route.params.id)
-
     return {
       project: store.state.projects.find(p => p.id === projectId),
       members: store.state.members,
@@ -313,7 +165,8 @@ export default {
       visible: false,
       dataProject: null,
       dataTask: null,
-      dataMemberTask: null
+      dataMemberTask: null,
+      dataDueDate: null,
     }
   },
   apollo: {
@@ -340,6 +193,11 @@ export default {
                 image
               }
             }
+            members {
+              id
+              name
+              image
+            }
           }
         }
       `,
@@ -351,6 +209,7 @@ export default {
       result({ data }) {
         this.dataProject = data.project
         this.dataTask = data.project.tasks
+        this.dataDueDate = data.project.dueDate.$dayjs()
       },
     },
   },
@@ -366,12 +225,22 @@ export default {
   },
 
   computed: {
+    formatCompat(date) {
+      var ms = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      return date.getDate() + ' ' + ms[date.getMonth()] + ' ' + date.getFullYear()
+    },
     projectFunc() {
       return this.$store.getters.project(parseInt(this.$route.params.id))
     },
     tasksFunc() {
       return this.$store.getters.tasks
     },
+    tasksDone() {
+      return this.dataTask.filter(item => item.isDone==true).length
+    },
+    tasksUndone() {
+      return this.dataTask.filter(item => item.isDone==false).length
+    }
   },
 }
 </script>

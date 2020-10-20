@@ -135,7 +135,7 @@
                       </div>
                       <div id="information" align="left">
                         <div>
-                          <b id="displayname">{{ member.displayName }}</b>
+                          <b id="displayname">{{ member.name }}</b>
                         </div>
                         <div id="memberposition">
                           {{ member.position }}
@@ -300,7 +300,7 @@ button {
   /* padding: 15px 15px 15px 15px; */
   /* border-radius: 5px; */
   /* เงากรอบขาว ระยะเงาด้านขวากับกรอบ ระยะเงาด้านล่างกับกรอบ ความฟุ่งของเงา สีของเงา*/
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-shadow: 1.5px 1.5px 5px #b1b1b1;
   margin-bottom: 0px; /* ระยะห่างระหว่าง card */
   margin-top: 3px;

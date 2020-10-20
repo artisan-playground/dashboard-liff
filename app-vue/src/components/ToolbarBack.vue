@@ -86,6 +86,7 @@ p {
   border-bottom: 1px dashed #ddd;
 } */
 #displayName {
+  font-size: 12px;
   color: white;
   margin-top: 1em;
   margin-bottom: 0.5em;
@@ -94,9 +95,9 @@ p {
   /* display: block; */
   /* margin: 0 auto; */
   /* margin-left: 10%; */
-  margin: 10px 15px 10px 10px;
+  margin: 10px 5px 10px 10px;
   /* width: 18%; */
-  width: 40px;
+  width: 24px;
   -moz-border-radius: 100px;
   -webkit-border-radius: 100px;
   border-radius: 100px;
