@@ -118,7 +118,7 @@ div {
   width: 22.5px;
 }
 .toolbar {
-  background-color: #333333;
+  background-color: #262626;
   height: 50px;
 }
 .profile {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user">
     <ToolbarBack />
     <br />
     <div style="margin-top:60px">
@@ -17,7 +17,7 @@
                 class="profile"
                 id="pictureUrl"
                 :src="
-                  dataUser.image ||
+                  user.image ||
                     'https://www.iconfinder.com/data/icons/facebook-51/32/FACEBOOK_LINE-01-512.png'
                 "
               />
@@ -43,7 +43,7 @@
           <!-- Name, Position , Status -->
           <a-row style="float:left; margin-bottom: 40px;">
             <a-row style="font-size:20px; color:#0036C7; font-weight:500">
-              {{ dataUser.name }}
+              {{ user.name }}
             </a-row>
             <a-row>
               Position
@@ -78,8 +78,8 @@
 // import store from '../store/index.js'
 import ToolbarBack from '@/components/ToolbarBack.vue'
 import BarRouter from '@/components/BarRouter.vue'
-import gql from 'graphql-tag'
-
+// import gql from 'graphql-tag'
+import * as gqlQuery from '../constants/graphql'
 export default {
   name: 'profileMember',
   components: {
@@ -89,34 +89,21 @@ export default {
   methods: {},
   apollo: {
     getUser: {
-      query: gql`
-        query User($memberId: Int!) {
-          user(where: { id: $memberId }) {
-            id
-            name
-            image
-            email
-            department
-            position
-            type
-            skills
-          }
-        }
-      `,
+      query: gqlQuery.MEMBER_QUERY,
       variables() {
         return {
           memberId: parseInt(this.$route.params.id),
         }
       },
-      result({ data }) {
-        this.dataUser = data.user
+      update( data ) {
+        this.user = data.user
         console.log('We got some result!', data)
       },
     },
   },
   data() {
     return {
-      dataUser: null,
+      user: null,
     }
   },
   mounted() {

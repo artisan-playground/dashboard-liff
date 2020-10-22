@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="dataProject">
     <ToolbarBack />
     <br />
     <v-row style="margin: 60px 0px 0px 0px">
@@ -21,17 +21,18 @@
 
     <v-row style="margin-left:6px; margin-right:6px;">
       <v-col>
-        <v-card elevation="6">
-          <div style="padding-top:10px"><a-icon type="carry-out" style="color:#105EFB" /></div>
-
+        <v-card elevation="6" id="card">
+          <div style="padding-top:10px">
+            <a-icon type="carry-out" style="color:#105EFB" />
+          </div>
             <b>{{ tasksDone }}</b>
           <div id="position" style="padding-bottom:10px">Done Task</div>
         </v-card>
       </v-col>
       <v-col>
-        <v-card elevation="6">
+        <v-card elevation="6" id="card">
           <div style="padding-top:10px">
-            <a-icon type="smile" style="color:#105EFB" />
+            <a-icon type="team" style="color:#105EFB" />
           </div>
           <div>
             <b>{{ dataProject.members.length }}</b>
@@ -40,7 +41,7 @@
         </v-card>
       </v-col>
       <v-col>
-        <v-card elevation="6">
+        <v-card elevation="6" id="card">
           <div style="padding-top:10px"><a-icon type="profile" style="color:#105EFB" /></div>
           <div><b>{{ tasksUndone }}</b></div>
           <div id="position" style="padding-bottom:10px">Today's Task</div>
@@ -51,12 +52,12 @@
     <!-- Date -->
     <v-row style="margin-left:6px; margin-right:6px;">
       <v-col v-if="project">
-        <v-card>
+        <v-card id="card">
           <div style="padding-top:10px">
             <a-icon type="calendar" style="color:#105EFB" />
           </div>
           <div>
-            <b>{{ dataProject.dueDate }}</b>
+            <b>{{ $dayjs(dataProject.dueDate).format('DD MMM YYYY') }}</b>
           </div>
           <div id="position" style="padding-bottom:10px">Release Date</div>
         </v-card>
@@ -77,7 +78,7 @@
         </v-col>
       </v-row>
       <div v-for="task in dataTask" :key="task.id" style="margin-left:6px; margin-right:6px;">
-        <v-card id="card" align="left" :to="{ name: 'taskDetail', params: { id: task.id } }">
+        <v-card id="taskcard" align="left" :to="{ name: 'taskDetail', params: { id: task.id } }">
           <div style="padding-left:15px">
             <v-row>
               <v-col>
@@ -127,7 +128,7 @@
                     :key="member.id"
                     style="border-radius: 100%; margin-left:3px; width:33px; height:33px;"
                   >
-                    <img v-bind:src="member.image" />
+                    <img style="z-index:1;" v-bind:src="member.image" />
                   </vs-avatar>
                 </vs-avatar-group>
               </v-col>
@@ -147,8 +148,8 @@
 import store from '../store/index.js'
 import ToolbarBack from '@/components/ToolbarBack.vue'
 import BarRouter from '@/components/BarRouter.vue'
-// import * as gqlQuery  from '../constants/graphql'
-import gql from 'graphql-tag'
+import * as gqlQuery from '../constants/graphql'
+// import gql from 'graphql-tag'
 export default {
   name: 'project',
   components: {
@@ -164,52 +165,21 @@ export default {
       form: this.$form.createForm(this),
       visible: false,
       dataProject: null,
-      dataTask: null,
+      dataTask: [],
       dataMemberTask: null,
-      dataDueDate: null,
     }
   },
   apollo: {
     getProject: {
-      query: gql`
-        query($projectId: Int!) {
-          project(where: { id: $projectId }) {
-            id
-            projectName
-            projectType
-            projectImage
-            projectDetail
-            status
-            dueDate
-            tasks {
-              id
-              taskName
-              startTime
-              endTime
-              taskDetail
-              isDone
-              members {
-                id
-                image
-              }
-            }
-            members {
-              id
-              name
-              image
-            }
-          }
-        }
-      `,
+      query: gqlQuery.PROJECT_QUERY,
       variables() {
         return {
           projectId: parseInt(this.$route.params.id),
         }
       },
-      result({ data }) {
+      update( data ) {
         this.dataProject = data.project
         this.dataTask = data.project.tasks
-        this.dataDueDate = data.project.dueDate.$dayjs()
       },
     },
   },
@@ -249,6 +219,9 @@ export default {
 div {
   font-family: 'Roboto';
 }
+#card {
+  border-radius: 2px
+}
 #imgProject {
   margin-top: 2px;
   border-radius: 100%;
@@ -266,9 +239,9 @@ div {
   margin-top: 0px;
   padding-bottom: 0px;
 }
-#card {
+#taskcard {
   margin: 3px 15px 24px 15px; /* ระยะห่างรอบๆ card */
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 10px 12px 10px 12px;
   margin-bottom: 20px;
   text-decoration: none;

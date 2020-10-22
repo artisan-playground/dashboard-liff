@@ -7,6 +7,7 @@
         <a-row>
           <a-form-item label="Task name">
             <a-input
+              v-model="newTask"
               v-decorator="[
                 'name',
                 {
@@ -44,10 +45,10 @@
               placeholder="Please choose the type"
             >
               <a-select-option value="private">
-                Full-time
+                private
               </a-select-option>
               <a-select-option value="public">
-                Intern
+                public
               </a-select-option>
             </a-select>
           </a-form-item>
@@ -99,6 +100,7 @@
         <a-row>
           <a-form-item label="Description">
             <a-textarea
+              v-model="description"
               v-decorator="[
                 'description',
                 {
@@ -129,6 +131,7 @@
 <script>
 import ToolbarBack from '@/components/ToolbarBack.vue'
 import BarRouter from '@/components/BarRouter.vue'
+// import * as gqlQuery from '../constants/graphql'
 
 const MOCK_DATA = {
   '@': ['Chalobon', 'NaN', 'pupaeng.’'],
@@ -147,6 +150,8 @@ export default {
       startValue: null,
       endValue: null,
       endOpen: false,
+      newTask: '',
+      description: ''
     }
   },
   watch: {
@@ -158,6 +163,15 @@ export default {
     },
   },
   methods: {
+    // addTask() {
+    //   if(this.newTask) {
+    //     this.$apollo.mutation({
+    //       mutation: gqlQuery.ADD_TASK,
+    //       variables: { project: this.id, taskName: this.newTask, taskDetail: this.description  }
+    //     })
+    //   }
+      
+    // },
     onSearch(_, prefix) {
       console.log(_, prefix)
       this.prefix = prefix

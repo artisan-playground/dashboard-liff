@@ -5,6 +5,7 @@ import Button from 'ant-design-vue/lib/button'
 import 'ant-design-vue/dist/antd.css'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import dayjs from './plugins/dayjs'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css'
 import { createProvider } from './vue-apollo'
@@ -16,10 +17,12 @@ Vue.use(Vuesax, {
   // options here
 })
 
+
+
 new Vue({
   router,
   store,
-  vuetify,
+  vuetify,dayjs,
   apolloProvider: createProvider(),
   render: h => h(App),
 }).$mount('#app')

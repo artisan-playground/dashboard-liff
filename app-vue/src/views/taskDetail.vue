@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div v-if="dataTask">
     <ToolbarBack />
     <br />
     <div style="margin :60px 18px 0 18px">
       <!-- Done button -->
       <v-btn
-      v-model="isDone"
+        v-model="isDone"
         id="buttonStatus"
-        v-if="dataTask.isDone == false"
+        v-if="taskFunc.status == false"
         style="width:100%; text-transform: capitalize; color: #000000;"
         elevation="6"
         color="#F77B72"
-        @click="changeStatus()"
+        v-on:click="changeStatus()"
       >
         <svg
           style="margin-right:3px"
@@ -32,13 +32,13 @@
 
       <!-- WIP button -->
       <v-btn
-      v-model="isDone"
+        v-model="isDone"
         id="buttonStatus"
-        v-if="dataTask.isDone == true"
+        v-if="taskFunc.status == true"
         style="width:100%; text-transform: capitalize; color: #000000;"
         elevation="6"
         color="#4DD987"
-        @click="changeStatus()"
+        v-on:click="changeStatus()"
       >
         <svg
           style="margin-right:3px"
@@ -67,7 +67,7 @@
       <div>
         <v-row style="margin-left:6px; margin-right:6px;">
           <v-col>
-            <v-card elevation="6">
+            <v-card elevation="6" id="card">
               <div style="padding-top:10px">
                 <span
                   class="iconify"
@@ -83,18 +83,20 @@
             </v-card>
           </v-col>
           <v-col>
-            <v-card elevation="6">
+            <v-card elevation="6" id="card">
               <div style="padding-top:10px">
                 <a-icon type="clock-circle" style="color:#0036c7; font-size: 22px;" />
               </div>
-              <div><b>{{ dataProject.dueDate }}</b></div>
+              <div>
+                <b>{{ $dayjs(dataProject.dueDate).format('DD MMM YYYY') }}</b>
+              </div>
               <div id="position" style="padding-bottom:10px">Due date</div>
             </v-card>
           </v-col>
         </v-row>
         <v-row style="margin-left:6px; margin-right:6px;">
           <v-col>
-            <v-card>
+            <v-card id="card">
               <div style="padding-top:10px">
                 <span
                   class="iconify"
@@ -105,14 +107,10 @@
               </div>
               <div class="center con-avatars">
                 <vs-avatar-group>
-                  <vs-avatar circle
-                    v-for="member in dataProject.members"
-                    :key="member.id"
-                  >
-                    <img v-bind:src="member.image">
+                  <vs-avatar circle v-for="member in dataProject.members" :key="member.id">
+                    <img v-bind:src="member.image" />
                   </vs-avatar>
                 </vs-avatar-group>
-
               </div>
               <div id="position" style="padding-bottom:10px">Team</div>
             </v-card>
@@ -170,68 +168,54 @@
     </div>
 
     <!-- Comment -->
-    <v-row style="margin-left:6px; margin-right:6px; margin-top:12px">
-      <v-col>
-        <span
-          class="iconify"
-          data-inline="false"
-          data-icon="ant-design:message-outlined"
-          style="color: #105efb; font-size: 22px; float:left"
-        ></span>
-        <b style="float: left; font-size:16px">Comment</b>
-      </v-col>
-    </v-row>
-    <v-row style="margin-left:6px; margin-right:6px; margin-top:12px">
-      <div style="width:100%; margin-left:12px; margin-right:12px">
-        <v-row v-for="comment in comments" :key="comment.id">
-          <v-col cols="2">
-            <span
-              class="iconify"
-              data-inline="false"
-              data-icon="carbon:user-avatar-filled-alt"
-              style="color: #8f8f8f; font-size: 40px;"
-            ></span>
-          </v-col>
-
-          <v-col cols="10" style="padding-left: 0px;">
-            <v-card style="">
-              <v-row style="margin:5px 5px 0 5px">
-                <v-col style="width:80%">
-                  <v-row>
-                    <span style="float:left; margin-right:8px; font-weight:550">{{
-                      comment.name
-                    }}</span>
-                    <span style="float:left; color:#8F8F8F;">{{ comment.dateTime }}</span>
-                  </v-row>
-                </v-col>
-                <v-col style="width:20%">
-                  <a-dropdown :trigger="['click']" style="font-size: 10px; float:right">
-                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                      <b><a-icon type="more" style="color: #8F8F8F; font-size: 15px;"/></b>
-                    </a>
-                    <a-menu slot="overlay">
-                      <a-menu-item key="0" @click="reply">
-                        Reply
-                      </a-menu-item>
-                      <a-menu-item key="1" @click="edit">
-                        Edit
-                      </a-menu-item>
-                      <a-menu-item key="3" @click="deleteComment">
-                        Delete
-                      </a-menu-item>
-                    </a-menu>
-                  </a-dropdown>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col style="padding-top: 0px;">
-                  <span style="float:left; padding-left: 25px;">{{ comment.comment }}</span>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
+    <v-row style="margin-left:18px; margin-right:18px; margin-top:12px">
+      <v-row style="margin-left:6px">
+        <a-icon type="message" style="color:rgb(16, 94, 251); font-size: 22px;" />
+        <span>Comment</span>
+      </v-row>
+      <a-comment>
+        <template slot="actions">
+          <span key="comment-basic-like">
+            <a-tooltip title="Like">
+              <a-icon
+                type="like"
+                :theme="action === 'liked' ? 'filled' : 'outlined'"
+                @click="like"
+              />
+            </a-tooltip>
+            <span style="padding-left: '8px';cursor: 'auto'">
+              {{ likes }}
+            </span>
+          </span>
+          <span key="comment-basic-dislike">
+            <a-tooltip title="Dislike">
+              <a-icon
+                type="dislike"
+                :theme="action === 'disliked' ? 'filled' : 'outlined'"
+                @click="dislike"
+              />
+            </a-tooltip>
+            <span style="padding-left: '8px';cursor: 'auto'">
+              {{ dislikes }}
+            </span>
+          </span>
+          <span key="comment-basic-reply-to">Reply to</span>
+        </template>
+        <a slot="author">Han Solo</a>
+        <a-avatar
+          slot="avatar"
+          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          alt="Han Solo"
+        />
+        <p slot="content">
+          We supply a series of design principles, practical patterns and high quality design
+          resources (Sketch and Axure), to help people create their product prototypes beautifully
+          and efficiently.
+        </p>
+        <a-tooltip slot="datetime" :title="moment().format('YYYY-MM-DD HH:mm:ss')">
+          <span>{{ moment().fromNow() }}</span>
+        </a-tooltip>
+      </a-comment>
     </v-row>
 
     <!-- input comment -->
@@ -272,17 +256,12 @@ function getBase64(file) {
   })
 }
 
-const TOGGLE_STATUS = gql`
-  mutation UpdateTask($taskId:Int!,$data: TaskUpdateInput!) {
-    updateOneTask(where: {id:$taskId}, data: $data) {
-      id
-      isDone
-    }
-  }`
-
 import ToolbarBack from '@/components/ToolbarBack.vue'
 import gql from 'graphql-tag'
 import store from '../store/index.js'
+import moment from 'moment'
+import * as gqlQuery from '../constants/graphql'
+
 export default {
   name: 'taskDetail',
   components: {
@@ -303,8 +282,8 @@ export default {
               projectType
               dueDate
               members {
-              id
-              image
+                id
+                image
               }
             }
             members {
@@ -330,10 +309,14 @@ export default {
 
   data() {
     return {
-      dataTask:null,
-      dataProject:null,
-      dataMember:null,
+      dataTask: null,
+      dataProject: null,
+      dataMember: null,
       isDone: false,
+      likes: 0,
+      dislikes: 0,
+      action: null,
+      moment,
       project: store.state.projects,
       task: store.state.tasks,
 
@@ -392,36 +375,50 @@ export default {
     },
   },
   methods: {
-
-    handleToggle: function () {
+    toggleDone: function(data) {
+      console.log(parseInt(this.$route.params.id))
       this.$apollo.mutate({
-        mutation: TOGGLE_STATUS,
+        mutation: gqlQuery.TOGGLE_STATUS,
         variables: {
-          taskId: parseInt(this.$route.params.id),
-          label: this.isDone
-        }
-      }) 
+          id: parseInt(this.$route.params.id),
+          data: !data.isDone,
+        },
+        update: (store, { data: { updateOneTask } }) => {
+          if (updateOneTask.isDone) {
+            // eslint-disable-next-line
+            console.log(updateOneTask)
+          }
+        },
+      })
+    },
+    toggleUndone: function(data) {
+      console.log(parseInt(this.$route.params.id))
+      this.$apollo.mutate({
+        mutation: gqlQuery.TOGGLE_STATUS,
+        variables: {
+          id: parseInt(this.$route.params.id),
+          data: data.isDone,
+        },
+        update: (store, { data: { updateOneTask } }) => {
+          if (updateOneTask.isDone) {
+            // eslint-disable-next-line
+            console.log(updateOneTask)
+          }
+        },
+      })
+    },
+    like() {
+      this.likes = 1
+      this.dislikes = 0
+      this.action = 'liked'
+    },
+    dislike() {
+      this.likes = 0
+      this.dislikes = 1
+      this.action = 'disliked'
     },
 
-    async changeStatus() {
-      await this.$apollo.mutate({
-        mutation: gql`mutation UpdateTask($taskId:Int!,$data: TaskUpdateInput!) {
-          updateOneTask(where: {id:$taskId}, data: $label) {
-            id
-            isDone
-          }
-        }`,
-  
-        variables: {
-          taskId: parseInt(this.$route.params.id),
-          label: this.isDone
-        },
-        result({ data }) {
-          this.isDone = data.task.isDone
-        }
-        
-      })
-
+    changeStatus() {
       console.log('ค่าเริ่มต้น ' + this.taskFunc.status)
       if (this.taskFunc.status == false) {
         this.taskFunc.status = true
@@ -487,6 +484,9 @@ export default {
 div {
   font-family: 'Roboto';
 }
+#card {
+  border-radius: 2px;
+}
 .detailTask {
   margin: 0px 18px 0px 18px;
   background-color: #e9f0ff;
@@ -498,9 +498,6 @@ div {
   font-size: 12px;
   margin-top: 0px;
   padding-bottom: 0px;
-}
-#buttonStatus {
-  border-radius: 10px;
 }
 .ant-upload-select-picture-card i {
   font-size: 32px;

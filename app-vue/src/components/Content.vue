@@ -32,14 +32,6 @@
               <md-button style="color:#0036C7">Read more</md-button>
             </md-card-expand-trigger>
           </md-card-actions>
-
-          <md-card-expand-content>
-            <md-card-content
-              >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum
-              odio. Dolores, sed accusantium quasi non, voluptas eius illo quas, saepe voluptate
-              pariatur in deleniti minus sint. Excepturi.</md-card-content
-            >
-          </md-card-expand-content>
         </md-card-expand>
       </md-card>
     </div>

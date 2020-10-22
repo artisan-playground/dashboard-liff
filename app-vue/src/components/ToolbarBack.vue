@@ -1,18 +1,19 @@
 <template>
-  <div style="position: fixed; z-index:2; width:100%">
+  <div style="position: fixed; z-index:10; width:100%">
     <md-toolbar class="toolbar" md-elevation="1">
-      <table style="border:none; width:100% ">
-        <tr>
-          <td align="left">
-            <!-- style="width:30%" -->
-            <md-button @click="goBack()" style="width: 20px;">
-              <a-icon type="left" style="color:white;" />
-            </md-button>
+      <div style="border:none; width:100% ">
+        <v-row>
+          <v-col align="left">
+            <v-btn @click="$router.go(-1)" style="background-color:#262626; max-width:5%; height: 36px; min-width: 0px; padding-left:10px; box-shadow: none;">
+              <a-icon type="left" style="margin-top:10px; margin-left:20px; color:white;" />
+            </v-btn>
+          </v-col>
 
-            <!-- style="width:18%;" -->
-          </td>
+          <v-col>
+            <!-- <div class="title">{{ msg }}</div> -->
+          </v-col>
 
-          <td align="right">
+          <v-col align="right">
             <div class="profile">
               <img
                 id="pictureUrl"
@@ -23,9 +24,9 @@
               />
               <h3 id="displayName" style="display:inline">{{ profileStore.displayName }}</h3>
             </div>
-          </td>
-        </tr>
-      </table>
+          </v-col>
+        </v-row>
+      </div>
     </md-toolbar>
   </div>
 </template>
@@ -40,10 +41,6 @@ export default {
     ...mapState({
       profileStore: store => store.profile,
     }),
-
-    goBack() {
-      window.history.back()
-    },
   },
   // async mounted() {
   //   await liff.init({ liffId: '1654900324-lDYAE146' })
@@ -108,7 +105,7 @@ p {
   width: 22.5px;
 }
 .toolbar {
-  background-color: #333333;
+  background-color: #262626;
   height: 50px;
 }
 .profile {
