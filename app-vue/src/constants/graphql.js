@@ -11,6 +11,8 @@ export const ALL_MEMBER_QUERY = gql`
       position
       type
       skills
+      startDate
+      dueDate
     }
   }
 `
@@ -45,6 +47,8 @@ export const MEMBER_QUERY = gql`
       position
       type
       skills
+      startDate
+      dueDate
     }
   }
 `
@@ -66,6 +70,31 @@ export const PROJECT_QUERY = gql`
         endTime
         taskDetail
         isDone
+        members {
+          id
+          image
+        }
+      }
+      members {
+        id
+        name
+        image
+      }
+    }
+  }
+`
+export const TASK_QUERY = gql`
+  query Task($taskId: Int!) {
+    task(where: { id: $taskId }) {
+      id
+      isDone
+      taskName
+      taskDetail
+      project {
+        id
+        projectName
+        projectType
+        dueDate
         members {
           id
           image

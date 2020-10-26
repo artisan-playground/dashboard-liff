@@ -7,22 +7,22 @@
     <div class="news">
       <v-card id="card" align="left" v-for="data in news" :key="data.id">
         <div>
-          <v-row style="margin:auto; padding:auto;">
+          <v-row style="margin:auto; padding:auto; margin-left:0px;">
             <!-- Date -->
             <v-col
               cols="2"
               id="date"
-              style="margin-bottom:auto; margin-top:auto; padding-left: 8%;"
+              style="margin-bottom:auto; margin-top:auto;"
             >
-              <v-row style="color:#8F8F8F;">
-                <span style="text-align: center;">{{ data.day }}</span>
+              <v-row style="color:#8F8F8F; margin-left:0px; margin-right:0px;">
+                <span>{{ data.day }}</span>
               </v-row>
-              <v-row>
+              <v-row style="margin-left:0px; margin-right:0px;">
                 <div>
-                  <b style="text-align: center;">{{ data.date }}</b>
+                  <b>{{ data.date }}</b>
                 </div>
               </v-row>
-              <v-row style="color:#8F8F8F">
+              <v-row style="color:#8F8F8F; margin-left:0px; margin-right:0px;">
                 <div>{{ data.month }}</div>
               </v-row>
             </v-col>
@@ -113,6 +113,7 @@ div {
 }
 #card {
   margin: 3px 15px 24px 15px; /* ระยะห่างรอบๆ card */
+  border-radius: 2px;
 }
 #profileImg {
   border-radius: 100%;
@@ -128,6 +129,8 @@ div {
   /* vertical-align: middle; */
 }
 .vl {
-  border-left: 0.5px solid grey;
+  border-left: 0.5px solid rgb(184, 184, 184);
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>

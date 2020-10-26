@@ -107,7 +107,7 @@
               </div>
               <div class="center con-avatars">
                 <vs-avatar-group>
-                  <vs-avatar circle v-for="member in dataProject.members" :key="member.id">
+                  <vs-avatar circle v-for="member in dataTask.members" :key="member.id">
                     <img v-bind:src="member.image" />
                   </vs-avatar>
                 </vs-avatar-group>
@@ -257,7 +257,6 @@ function getBase64(file) {
 }
 
 import ToolbarBack from '@/components/ToolbarBack.vue'
-import gql from 'graphql-tag'
 import store from '../store/index.js'
 import moment from 'moment'
 import * as gqlQuery from '../constants/graphql'
@@ -269,37 +268,13 @@ export default {
   },
   apollo: {
     getProject: {
-      query: gql`
-        query Task($taskId: Int!) {
-          task(where: { id: $taskId }) {
-            id
-            isDone
-            taskName
-            taskDetail
-            project {
-              id
-              projectName
-              projectType
-              dueDate
-              members {
-                id
-                image
-              }
-            }
-            members {
-              id
-              name
-              image
-            }
-          }
-        }
-      `,
+      query: gqlQuery.TASK_QUERY,
       variables() {
         return {
           taskId: parseInt(this.$route.params.id),
         }
       },
-      result({ data }) {
+      update( data ) {
         this.dataTask = data.task
         this.dataProject = data.task.project
         this.dataMember = data.task.member
@@ -377,6 +352,7 @@ export default {
   methods: {
     toggleDone: function(data) {
       console.log(parseInt(this.$route.params.id))
+      console.log(gqlQuery.TOGGLE_STATUS);
       this.$apollo.mutate({
         mutation: gqlQuery.TOGGLE_STATUS,
         variables: {

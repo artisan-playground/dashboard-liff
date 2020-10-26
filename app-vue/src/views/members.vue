@@ -1,7 +1,7 @@
 <template>
   <div class="project">
     <!-- <h1>This is an about page</h1> -->
-    <Toolbar msg="Members"/>
+    <Toolbar msg="Members" />
     <br />
     <md-content id="content">
       <div>
@@ -11,11 +11,7 @@
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
               <div align="right" style="padding-right:18px; padding-left:18px">
-                <a-input-search
-                  v-model="search"
-                  type="search"
-                  placeholder="input search text"
-                />
+                <a-input-search v-model="search" type="search" placeholder="input search text" />
 
                 <!-- <a-input-search
                   v-model="search"
@@ -49,11 +45,18 @@
                         <br />
                         <div id="department">
                           Full-time/Intern :
-                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                          <span>{{ member.type }}</span>
                         </div>
                         <div id="department">
                           Department:
-                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                          <span>{{ member.department }}</span>
+                        </div>
+                        <div v-if="(member.type == 'Intern')" id="department" style="font-size:10px">
+                          Internship period :
+                          <span>
+                            {{ $dayjs(member.startDate).format('DD MMM YYYY') }}
+                            - {{ $dayjs(member.dueDate).format('DD MMM YYYY') }}
+                          </span>
                         </div>
                       </div>
                     </v-row>
@@ -68,11 +71,7 @@
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
               <div align="right" style="padding-right:18px; padding-left:18px">
-                <a-input-search
-                  v-model="search"
-                  type="search"
-                  placeholder="input search text"
-                />
+                <a-input-search v-model="search" type="search" placeholder="input search text" />
               </div>
             </div>
             <!-- end search button -->
@@ -97,11 +96,18 @@
                         <br />
                         <div id="department">
                           Full-time/Intern :
-                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                          <span>{{ member.type }}</span>
                         </div>
                         <div id="department">
                           Department:
-                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                          <span>{{ member.department }}</span>
+                        </div>
+                        <div v-if="(member.type == 'Intern')" id="department" style="font-size:10px">
+                          Internship period :
+                          <span>
+                            {{ $dayjs(member.startDate).format('DD MMM YYYY') }}
+                            - {{ $dayjs(member.dueDate).format('DD MMM YYYY') }}
+                          </span>
                         </div>
                       </div>
                     </v-row>
@@ -115,11 +121,7 @@
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
               <div align="right" style="padding-right:18px; padding-left:18px">
-                <a-input-search
-                  v-model="search"
-                  type="search"
-                  placeholder="input search text"
-                />
+                <a-input-search v-model="search" type="search" placeholder="input search text" />
               </div>
             </div>
             <!-- end search button -->
@@ -143,11 +145,18 @@
                         <br />
                         <div id="department">
                           Full-time/Intern :
-                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                          <span>{{ member.type }}</span>
                         </div>
                         <div id="department">
                           Department:
-                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                          <span>{{ member.department }}</span>
+                        </div>
+                        <div v-if="(member.type == 'Intern')" id="department" style="font-size:10px">
+                          Internship period :
+                          <span>
+                            {{ $dayjs(member.startDate).format('DD MMM YYYY') }}
+                            - {{ $dayjs(member.dueDate).format('DD MMM YYYY') }}
+                          </span>
                         </div>
                       </div>
                     </v-row>
@@ -161,11 +170,7 @@
             <!-- search button -->
             <div style="width:100%; margin-bottom:10px">
               <div align="right" style="padding-right:18px; padding-left:18px">
-                <a-input-search
-                  v-model="search"
-                  type="search"
-                  placeholder="input search text"
-                />
+                <a-input-search v-model="search" type="search" placeholder="input search text" />
               </div>
             </div>
             <!-- end search button -->
@@ -189,11 +194,18 @@
                         <br />
                         <div id="department">
                           Full-time/Intern :
-                          <span style="opacity: 0.75;">{{ member.type }}</span>
+                          <span>{{ member.type }}</span>
                         </div>
                         <div id="department">
                           Department:
-                          <span style="opacity: 0.75;">{{ member.department }}</span>
+                          <span>{{ member.department }}</span>
+                        </div>
+                        <div v-if="(member.type == 'Intern')" id="department" style="font-size:10px">
+                          Internship period :
+                          <span>
+                            {{ $dayjs(member.startDate).format('DD MMM YYYY') }}
+                            - {{ $dayjs(member.dueDate).format('DD MMM YYYY') }}
+                          </span>
                         </div>
                       </div>
                     </v-row>
@@ -215,15 +227,15 @@
 import Toolbar from '@/components/Toolbar.vue'
 import BarRouter from '@/components/BarRouter.vue'
 // import store from '../store/index.js'
-import * as gqlQuery  from '../constants/graphql'
+import * as gqlQuery from '../constants/graphql'
 export default {
   name: 'members',
   components: {
-    Toolbar, 
+    Toolbar,
     BarRouter,
   },
   apollo: {
-    users: gqlQuery.ALL_MEMBER_QUERY
+    users: gqlQuery.ALL_MEMBER_QUERY,
   },
   data() {
     return {
@@ -354,6 +366,9 @@ button {
   color: #000000;
   opacity: 0.85;
   font-size: 12px;
+}
+span {
+  opacity: 0.75;
 }
 #des {
 }

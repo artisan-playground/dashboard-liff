@@ -1,12 +1,22 @@
 <template>
   <div>
     <div>
-      <table style="width:100%; margin-bottom:10px">
+      <div style="width:100%; margin-bottom:10px">
         <div style="margin-left:18px">
-          <td align="left" style="font-size:20px; font-weight:550">Content</td>
+          <v-row>
+            <v-col cols="6" align="left" style="font-size:20px; font-weight:550">Content</v-col>
+            <v-col cols="6" style="padding-right: 30px;">
+              <v-btn
+                color="primary"
+                style="float:right; text-transform: capitalize; background-color: #105EFB; "
+                to="/news/createContent"
+                ><a-icon type="plus" style="margin-right:2.5px" />Create</v-btn
+              >
+            </v-col>
+          </v-row>
         </div>
         <td align="right"></td>
-      </table>
+      </div>
     </div>
 
     <div class="news">
@@ -15,7 +25,7 @@
           <img
             v-bind:src="content.imageUrl"
             v-bind:alt="content.imageAlt"
-            style="border-radius: 5px; box-shadow: 1.5px 1.5px 10px #b1b1b1;   height:153.47px; object-fit:cover;"
+            style="box-shadow: 1.5px 1.5px 10px #b1b1b1;   height:153.47px; object-fit:cover;"
           />
         </md-card-media>
 
@@ -87,7 +97,7 @@ template {
   font-style: 'Roboto';
 }
 .news {
-  margin: 0px 18px 0px 18px;
+  /* margin: 0px 12px 0px 12px; */
   /* background-color: #e9f0ff; */
   padding-top: 15px;
   /* padding-left: 15px;
@@ -95,10 +105,11 @@ template {
   padding-bottom: 0.5px;
 }
 #card {
-  padding: 15px 15px 0 15px;
+  /* padding: 15px 15px 0 15px; */
   /* เงากรอบขาว ระยะเงาด้านขวากับกรอบ ระยะเงาด้านล่างกับกรอบ ความฟุ่งของเงา สีของเงา*/
   box-shadow: 1.5px 1.5px 5px #b1b1b1;
   margin-bottom: 24px;
+  border-radius: 2px;
 }
 #iconStatus {
   font-size: 10px;
