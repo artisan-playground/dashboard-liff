@@ -329,6 +329,107 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+type Event {
+  endDate: DateTime!
+  eventDate: DateTime!
+  eventName: String
+  id: Int!
+  invited(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
+  note: String
+  tag: String
+}
+
+input EventCreateInput {
+  endDate: DateTime!
+  eventDate: DateTime!
+  eventName: String
+  invited: UserCreateManyWithoutEventInput
+  note: String
+  tag: String
+}
+
+input EventCreateManyWithoutInvitedInput {
+  connect: [EventWhereUniqueInput!]
+  create: [EventCreateWithoutInvitedInput!]
+}
+
+input EventCreateWithoutInvitedInput {
+  endDate: DateTime!
+  eventDate: DateTime!
+  eventName: String
+  note: String
+  tag: String
+}
+
+input EventScalarWhereInput {
+  AND: [EventScalarWhereInput!]
+  endDate: DateTimeFilter
+  eventDate: DateTimeFilter
+  eventName: StringNullableFilter
+  id: IntFilter
+  NOT: [EventScalarWhereInput!]
+  note: StringNullableFilter
+  OR: [EventScalarWhereInput!]
+  tag: StringNullableFilter
+}
+
+input EventUpdateInput {
+  endDate: DateTimeFieldUpdateOperationsInput
+  eventDate: DateTimeFieldUpdateOperationsInput
+  eventName: NullableStringFieldUpdateOperationsInput
+  invited: UserUpdateManyWithoutEventInput
+  note: NullableStringFieldUpdateOperationsInput
+  tag: NullableStringFieldUpdateOperationsInput
+}
+
+input EventUpdateManyDataInput {
+  endDate: DateTimeFieldUpdateOperationsInput
+  eventDate: DateTimeFieldUpdateOperationsInput
+  eventName: NullableStringFieldUpdateOperationsInput
+  note: NullableStringFieldUpdateOperationsInput
+  tag: NullableStringFieldUpdateOperationsInput
+}
+
+input EventUpdateManyWithoutInvitedInput {
+  connect: [EventWhereUniqueInput!]
+  create: [EventCreateWithoutInvitedInput!]
+  delete: [EventWhereUniqueInput!]
+  deleteMany: [EventScalarWhereInput!]
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+  update: [EventUpdateWithWhereUniqueWithoutInvitedInput!]
+  updateMany: [EventUpdateManyWithWhereNestedInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutInvitedInput!]
+}
+
+input EventUpdateManyWithWhereNestedInput {
+  data: EventUpdateManyDataInput!
+  where: EventScalarWhereInput!
+}
+
+input EventUpdateWithoutInvitedDataInput {
+  endDate: DateTimeFieldUpdateOperationsInput
+  eventDate: DateTimeFieldUpdateOperationsInput
+  eventName: NullableStringFieldUpdateOperationsInput
+  note: NullableStringFieldUpdateOperationsInput
+  tag: NullableStringFieldUpdateOperationsInput
+}
+
+input EventUpdateWithWhereUniqueWithoutInvitedInput {
+  data: EventUpdateWithoutInvitedDataInput!
+  where: EventWhereUniqueInput!
+}
+
+input EventUpsertWithWhereUniqueWithoutInvitedInput {
+  create: EventCreateWithoutInvitedInput!
+  update: EventUpdateWithoutInvitedDataInput!
+  where: EventWhereUniqueInput!
+}
+
+input EventWhereUniqueInput {
+  id: Int
+}
+
 type File {
   id: Int!
   name: String
@@ -447,18 +548,21 @@ scalar Json
 type Mutation {
   createOneComment(data: CommentCreateInput!): Comment!
   createOneContact(data: ContactCreateInput!): Contact!
+  createOneEvent(data: EventCreateInput!): Event!
   createOneFile(data: FileCreateInput!): File!
   createOneProject(data: ProjectCreateInput!): Project!
   createOneTask(data: TaskCreateInput!): Task!
   createOneUser(data: UserCreateInput!): User!
   deleteOneComment(where: CommentWhereUniqueInput!): Comment
   deleteOneContact(where: ContactWhereUniqueInput!): Contact
+  deleteOneEvent(where: EventWhereUniqueInput!): Event
   deleteOneFile(where: FileWhereUniqueInput!): File
   deleteOneProject(where: ProjectWhereUniqueInput!): Project
   deleteOneTask(where: TaskWhereUniqueInput!): Task
   deleteOneUser(where: UserWhereUniqueInput!): User
   updateOneComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateOneContact(data: ContactUpdateInput!, where: ContactWhereUniqueInput!): Contact
+  updateOneEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
   updateOneFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
   updateOneProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateOneTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
@@ -690,6 +794,8 @@ type Query {
   comments(after: CommentWhereUniqueInput, before: CommentWhereUniqueInput, first: Int, last: Int): [Comment!]!
   contact(where: ContactWhereUniqueInput!): Contact
   contacts(after: ContactWhereUniqueInput, before: ContactWhereUniqueInput, first: Int, last: Int): [Contact!]!
+  event(where: EventWhereUniqueInput!): Event
+  events(after: EventWhereUniqueInput, before: EventWhereUniqueInput, first: Int, last: Int): [Event!]!
   file(where: FileWhereUniqueInput!): File
   files(after: FileWhereUniqueInput, before: FileWhereUniqueInput, first: Int, last: Int): [File!]!
   getTaskByProjectId(id: Int!): [Task!]
@@ -1009,6 +1115,7 @@ input UserCreateInput {
   department: String
   dueDate: DateTime!
   email: String!
+  Event: EventCreateManyWithoutInvitedInput
   image: String
   name: String
   position: String
@@ -1023,6 +1130,11 @@ input UserCreateInput {
 input UserCreateManyWithoutContactsInput {
   connect: [UserWhereUniqueInput!]
   create: [UserCreateWithoutContactsInput!]
+}
+
+input UserCreateManyWithoutEventInput {
+  connect: [UserWhereUniqueInput!]
+  create: [UserCreateWithoutEventInput!]
 }
 
 input UserCreateManyWithoutProjectsInput {
@@ -1049,6 +1161,7 @@ input UserCreateWithoutCommentsInput {
   department: String
   dueDate: DateTime!
   email: String!
+  Event: EventCreateManyWithoutInvitedInput
   image: String
   name: String
   position: String
@@ -1062,6 +1175,24 @@ input UserCreateWithoutCommentsInput {
 
 input UserCreateWithoutContactsInput {
   comments: CommentCreateManyWithoutUserInput
+  department: String
+  dueDate: DateTime!
+  email: String!
+  Event: EventCreateManyWithoutInvitedInput
+  image: String
+  name: String
+  position: String
+  projects: ProjectCreateManyWithoutMembersInput
+  role: Role
+  skills: UserCreateskillsInput
+  startDate: DateTime
+  tasks: TaskCreateManyWithoutMembersInput
+  type: String
+}
+
+input UserCreateWithoutEventInput {
+  comments: CommentCreateManyWithoutUserInput
+  contacts: ContactCreateOneWithoutUserInput!
   department: String
   dueDate: DateTime!
   email: String!
@@ -1082,6 +1213,7 @@ input UserCreateWithoutProjectsInput {
   department: String
   dueDate: DateTime!
   email: String!
+  Event: EventCreateManyWithoutInvitedInput
   image: String
   name: String
   position: String
@@ -1098,6 +1230,7 @@ input UserCreateWithoutTasksInput {
   department: String
   dueDate: DateTime!
   email: String!
+  Event: EventCreateManyWithoutInvitedInput
   image: String
   name: String
   position: String
@@ -1132,6 +1265,7 @@ input UserUpdateInput {
   department: NullableStringFieldUpdateOperationsInput
   dueDate: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
+  Event: EventUpdateManyWithoutInvitedInput
   image: NullableStringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   position: NullableStringFieldUpdateOperationsInput
@@ -1166,6 +1300,18 @@ input UserUpdateManyWithoutContactsInput {
   update: [UserUpdateWithWhereUniqueWithoutContactsInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutContactsInput!]
+}
+
+input UserUpdateManyWithoutEventInput {
+  connect: [UserWhereUniqueInput!]
+  create: [UserCreateWithoutEventInput!]
+  delete: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutEventInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutEventInput!]
 }
 
 input UserUpdateManyWithoutProjectsInput {
@@ -1213,6 +1359,7 @@ input UserUpdateWithoutCommentsDataInput {
   department: NullableStringFieldUpdateOperationsInput
   dueDate: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
+  Event: EventUpdateManyWithoutInvitedInput
   image: NullableStringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   position: NullableStringFieldUpdateOperationsInput
@@ -1226,6 +1373,24 @@ input UserUpdateWithoutCommentsDataInput {
 
 input UserUpdateWithoutContactsDataInput {
   comments: CommentUpdateManyWithoutUserInput
+  department: NullableStringFieldUpdateOperationsInput
+  dueDate: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  Event: EventUpdateManyWithoutInvitedInput
+  image: NullableStringFieldUpdateOperationsInput
+  name: NullableStringFieldUpdateOperationsInput
+  position: NullableStringFieldUpdateOperationsInput
+  projects: ProjectUpdateManyWithoutMembersInput
+  role: Role
+  skills: UserUpdateskillsInput
+  startDate: DateTimeFieldUpdateOperationsInput
+  tasks: TaskUpdateManyWithoutMembersInput
+  type: NullableStringFieldUpdateOperationsInput
+}
+
+input UserUpdateWithoutEventDataInput {
+  comments: CommentUpdateManyWithoutUserInput
+  contacts: ContactUpdateOneRequiredWithoutUserInput
   department: NullableStringFieldUpdateOperationsInput
   dueDate: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
@@ -1246,6 +1411,7 @@ input UserUpdateWithoutProjectsDataInput {
   department: NullableStringFieldUpdateOperationsInput
   dueDate: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
+  Event: EventUpdateManyWithoutInvitedInput
   image: NullableStringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   position: NullableStringFieldUpdateOperationsInput
@@ -1262,6 +1428,7 @@ input UserUpdateWithoutTasksDataInput {
   department: NullableStringFieldUpdateOperationsInput
   dueDate: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
+  Event: EventUpdateManyWithoutInvitedInput
   image: NullableStringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   position: NullableStringFieldUpdateOperationsInput
@@ -1274,6 +1441,11 @@ input UserUpdateWithoutTasksDataInput {
 
 input UserUpdateWithWhereUniqueWithoutContactsInput {
   data: UserUpdateWithoutContactsDataInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutEventInput {
+  data: UserUpdateWithoutEventDataInput!
   where: UserWhereUniqueInput!
 }
 
@@ -1295,6 +1467,12 @@ input UserUpsertWithoutCommentsInput {
 input UserUpsertWithWhereUniqueWithoutContactsInput {
   create: UserCreateWithoutContactsInput!
   update: UserUpdateWithoutContactsDataInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutEventInput {
+  create: UserCreateWithoutEventInput!
+  update: UserUpdateWithoutEventDataInput!
   where: UserWhereUniqueInput!
 }
 

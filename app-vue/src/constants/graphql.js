@@ -1,5 +1,24 @@
 import gql from 'graphql-tag'
 
+export const ALL_EVENT = gql`
+  query {
+    events {
+      id
+      eventName
+      eventDate
+      endDate
+      note
+      tag
+      invited {
+        id
+        email
+        name
+        image
+      }
+    }
+  }
+`
+
 export const ALL_MEMBER_QUERY = gql`
   query Users {
     users {

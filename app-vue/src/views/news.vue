@@ -6,7 +6,9 @@
     <br />
     <br />
     <md-content>
-      <Event />
+      <Events />
+      <br />
+      <Calendar />
       <br />
       <Content />
     </md-content>
@@ -18,16 +20,18 @@
 // @ is an alias to /src
 import Toolbar from '@/components/Toolbar.vue'
 import BarRouter from '@/components/BarRouter.vue'
-import Event from '@/components/Event.vue'
+import Events from '@/components/Events.vue'
 import Content from '@/components/Content.vue'
+import Calendar from '@/components/Calendar.vue'
 
 export default {
   name: 'news',
   components: {
     Toolbar,
     BarRouter,
-    Event,
+    Events,
     Content,
+    Calendar,
   },
 }
 </script>

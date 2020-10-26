@@ -5,26 +5,22 @@
     </div>
 
     <div class="news">
-      <v-card id="card" align="left" v-for="data in news" :key="data.id">
+      <v-card id="card" align="left" v-for="event in events" :key="event.id">
         <div>
           <v-row style="margin:auto; padding:auto; margin-left:0px;">
             <!-- Date -->
-            <v-col
-              cols="2"
-              id="date"
-              style="margin-bottom:auto; margin-top:auto;"
-            >
-              <v-row style="color:#8F8F8F; margin-left:0px; margin-right:0px;">
-                <span>{{ data.day }}</span>
-              </v-row>
-              <v-row style="margin-left:0px; margin-right:0px;">
+            <v-col cols="2" id="date" style="margin-bottom:auto; margin-top:auto;">
+              <div style="color:#8F8F8F; margin-left:0px; margin-right:0px;">
+                <span>{{ $dayjs(event.eventDate).format('ddd') }}</span>
+              </div>
+              <div style="margin-left:0px; margin-right:0px;">
                 <div>
-                  <b>{{ data.date }}</b>
+                  <b>{{ $dayjs(event.eventDate).format('D') }}</b>
                 </div>
-              </v-row>
-              <v-row style="color:#8F8F8F; margin-left:0px; margin-right:0px;">
-                <div>{{ data.month }}</div>
-              </v-row>
+              </div>
+              <div style="color:#8F8F8F; margin-left:0px; margin-right:0px;">
+                <div>{{ $dayjs(event.eventDate).format('MMM') }}</div>
+              </div>
             </v-col>
             <!-- End Date -->
 
@@ -37,7 +33,7 @@
                 <!-- Description Event -->
                 <v-col cols="7" style="padding-left:0px; padding-bottom:0px;">
                   <div>
-                    <b>{{ data.name }}</b>
+                    <b>{{ event.eventName }}</b>
                   </div>
                   <!-- <v-row>
                   {{
@@ -48,7 +44,7 @@
 
                 <!-- Important Icon -->
                 <v-col cols="5" style="padding-bottom:0px;">
-                  <a-tag style="float:right;" v-if="data.status == 'Important'" color="orange">
+                  <a-tag style="float:right;" v-if="event.tag == 'Important'" color="orange">
                     <span
                       id="iconStatus"
                       class="iconify"
@@ -57,7 +53,7 @@
                       style="font-size: 14px;"
                     ></span>
 
-                    {{ data.status }}
+                    {{ event.tag }}
                   </a-tag>
                 </v-col>
               </v-row>
@@ -65,7 +61,7 @@
               <!-- Description Event -->
 
               <v-row>
-                {{ data.description }}
+                {{ event.note }}
               </v-row>
 
               <!-- Member -->
@@ -92,13 +88,19 @@
 
 <script>
 import store from '../store/index.js'
+import * as gqlQuery from '../constants/graphql'
 export default {
-  name: 'Event',
-
+  name: 'Events',
   data() {
     return {
       news: store.state.news,
       members: store.state.members,
+      events: [],
+    }
+  },
+  apollo: {
+    events: {
+      query: gqlQuery.ALL_EVENT,
     }
   },
 }
@@ -127,6 +129,7 @@ div {
 }
 #date {
   /* vertical-align: middle; */
+  text-align:center;
 }
 .vl {
   border-left: 0.5px solid rgb(184, 184, 184);
